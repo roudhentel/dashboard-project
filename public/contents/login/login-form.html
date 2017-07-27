@@ -2,15 +2,16 @@
     <img class="microsoft-logo" src="assets/img/microsoft_logo.png" alt="logo">
     <div class="login-input">
         <fieldset>
-            <legend>Username:</legend>
+            <legend><i class="fa fa-envelope-o"></i> Email:</legend>
             <input type="text" ng-model="login.username" required>
         </fieldset>
-        <fieldset>
+        <!-- <fieldset>
             <legend>Password:</legend>
             <input type="password" ng-model="login.password" required>
-        </fieldset>
+        </fieldset> -->
     </div>
     <div class="login-command">
-        <button class="btn" ng-click="login($event, loginForm.$valid);">LOGIN</button>
+        <md-progress-linear md-mode="indeterminate" ng-show="loadingFlag"></md-progress-linear>
+        <button class="btn" ng-click="login($event, loginForm.$valid);" ng-disabled="loadingFlag">LOGIN</button>
     </div>
 </form>

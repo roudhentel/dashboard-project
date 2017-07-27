@@ -1,4 +1,4 @@
-var mainApp = angular.module("mainApp", ["ui.router"]);
+var mainApp = angular.module("mainApp", ["ui.router", "ngMaterial"]);
 
 mainApp.config(($stateProvider, $urlRouterProvider) => {
     $urlRouterProvider.otherwise('/login/authenticate');
@@ -18,5 +18,10 @@ mainApp.config(($stateProvider, $urlRouterProvider) => {
             url: "/signup",
             templateUrl: "contents/login/signup.html",
             controller: "signupCtrl"
+        })
+        .state('home', {
+            url: "/home",
+            templateUrl: "contents/home/",
+            controller: "homeCtrl"
         });
 });
