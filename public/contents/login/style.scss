@@ -1,0 +1,99 @@
+.login-page {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    .img-bg {
+        display: flex;
+        width: 70%;
+        height: 100%;
+        background: url('../../assets/img/bg.png');
+        background-size: cover;
+    }
+
+    .sub-view {
+        display: flex;
+        width: 30%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+
+        .login-form, .signup-form {
+            display: flex;
+            width: 100%;
+            height: 30%;
+            align-items: flex-start;
+            flex-direction: column;
+            margin: 0 5px;
+
+            .microsoft-logo {
+                margin-left: 5%;
+            }
+
+            h4 {
+                margin-left: 5%;
+                color: #757575;
+            }
+
+            .login-input {
+                height: 150px;
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                fieldset {
+                    display: flex;
+                    padding: 0;
+                    height: 50px;
+                    border: 1px solid #f1f1f1;
+                    border-radius: 3px;
+
+                    legend {
+                        margin-bottom: 0;
+                        font-size: 13px;
+                        color: #9c9c9c;
+                        width: auto;
+                        border: 0;
+                        margin-left: 5px;
+                        font-weight: normal;
+                        color: #545454;
+                    }
+
+                    input[type="text"], input[type="password"] {
+                        border: 0;
+                        height: 27px;
+                        width: 100%;
+                        padding: 0 5px 0 15px;
+                        color: #6d6d6d;
+
+                        &:active, &:focus, &:hover {
+                            outline: none;
+                        }
+                    }
+                }
+            }
+
+            .login-command {
+                display: flex;
+                height: 45px;
+                width: 90%;
+                margin: 15px auto 0 auto;
+
+                button {
+                    width: 100%;
+                    font-size: 21px;
+                    color: #FFF;
+                    background: #00abec;
+                }
+            }
+        }
+    }
+
+    
+}

@@ -1,0 +1,23 @@
+{
+  "name": "dashboard-project",
+  "version": "1.0.0",
+  "description": "Dashboard project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roudhentel Nagoy",
+  "license": "ISC",
+  "devDependencies": {
+    "azure-graph": "^2.1.0-preview",
+    "body-parser": "^1.17.2",
+    "connect-busboy": "0.0.2",
+    "express": "^4.15.3",
+    "express-fileupload": "^0.1.4",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "morgan": "^1.8.2",
+    "ms-rest-azure": "^2.2.3",
+    "nodemon": "^1.11.0"
+  }
+}

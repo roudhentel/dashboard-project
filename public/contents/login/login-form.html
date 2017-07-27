@@ -1,0 +1,16 @@
+<form name="loginForm" class="login-form">
+    <img class="microsoft-logo" src="assets/img/microsoft_logo.png" alt="logo">
+    <div class="login-input">
+        <fieldset>
+            <legend>Username:</legend>
+            <input type="text" ng-model="login.username" required>
+        </fieldset>
+        <fieldset>
+            <legend>Password:</legend>
+            <input type="password" ng-model="login.password" required>
+        </fieldset>
+    </div>
+    <div class="login-command">
+        <button class="btn" ng-click="login($event, loginForm.$valid);">LOGIN</button>
+    </div>
+</form>

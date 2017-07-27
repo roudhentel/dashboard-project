@@ -1,0 +1,21 @@
+<form name="signupForm" class="signup-form">
+    <img class="microsoft-logo" src="assets/img/microsoft_logo.png" alt="logo"><br>
+    <h4>Register New Account</h4><br>   
+    <div class="login-input">
+        <fieldset>
+            <legend>Username:</legend>
+            <input type="text" ng-model="login.username" required>
+        </fieldset>
+        <fieldset>
+            <legend>New Password:</legend>
+            <input type="password" ng-model="login.password" required>
+        </fieldset>
+        <fieldset>
+            <legend>Retype Password:</legend>
+            <input type="password" ng-model="login.repassword" required>
+        </fieldset>
+    </div>
+    <div class="login-command">
+        <button class="btn" ng-click="login($event, loginForm.$valid);">REGISTER</button>
+    </div>
+</form>
