@@ -1,15 +1,20 @@
-<div>
-    <table>
-        <tr>
-            <th>Display Name</th>
-            <th>Mail</th>
-            <th>Object Id</th>
-            <th>Object Type</th>
-            <th>Security Enabled</th>
-        </tr>
+<link rel="stylesheet" href="contents/home/style.css" />
 
-        <tr ng-repeat="grp in gbl.groups">
-            <td ng-repeat="col in ['displayName', 'mail', 'objectId', 'objectType', 'securityEnabled']">{{grp[col]}}</td>
-        </tr>
-    </table>
+<div class="home-page">
+    <div class="home-head">
+        <img src="assets/img/entwinedSolutions.png" alt="logo">
+        <div class="rside">
+            <span>John Doe <i class="fa fa-sort-down"></i></span>
+            <i class="fa fa-bars" ng-click="rsBarVisible = true;"></i>    
+        </div>
+    </div>
+    <div class="home-body" ui-view>
+
+    </div>
+
+    <div class="right-sidebar" ng-class="rsBarVisible ? 'active' : ''">
+        <div class="command">
+            <i class="fa fa-bars" ng-click="rsBarVisible = false;"></i>
+        </div>
+    </div>
 </div>

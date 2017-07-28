@@ -23,5 +23,10 @@ mainApp.config(($stateProvider, $urlRouterProvider) => {
             url: "/home",
             templateUrl: "contents/home/",
             controller: "homeCtrl"
+        })
+        .state('home.dashboard', {
+            url: "/dashboard",
+            templateUrl: "contents/dashboard/",
+            controller: "dashboardCtrl"
         });
 });

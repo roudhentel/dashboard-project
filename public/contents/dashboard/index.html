@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="contents/dashboard/style.css" />
+
+<div class="dashboard-page">
+    <div class="heading">
+        <h4>Support Monitoring Dashboard</h4>
+    </div>
+    <div class="details">
+        <div class="parent-row">
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container" ng-click="toggleDialog(true);">
+                        <div class="part">Network</div>
+                        <div class="part corange">15</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Panel</div>
+                        <div class="part cgreen">14</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">DMP</div>
+                        <div class="part cdorange">18</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Local PC</div>
+                        <div class="part cviolet">3</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Appspace</div>
+                        <div class="part cpink">10</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Other</div>
+                        <div class="part cdefault">2</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container"></div>
+                </div>
+            </div>
+        </div>
+        <div class="parent-row">
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Total Sites Monitored</div>
+                        <div class="part cdefault">400</div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Sites Requiring Attention</div>
+                        <div class="part cdefault">62</div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">New Zealand</div>
+                        <div class="part cdefault">4</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Brisbane</div>
+                        <div class="part cdefault">2</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parent-col">
+                <div class="child-row">
+                    <div class="item-container">
+                        <div class="part">Perth</div>
+                        <div class="part cdefault">5</div>
+                        <div class="part">
+                            <div class="label">Sites Requiring Attention</div>
+                            <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="backmodal" ng-click="toggleDialog(false);" ng-class="dashboard.smVisible ? 'show-modal' : ''" ng-show="dashboard.smVisible"></div>
+
+    <div class="dialog" ng-class="dashboard.smVisible ? 'hover' : ''" ng-show="dashboard.smVisible">
+        <header>
+            <div class="title">NETWORK</div>
+            <div class="close"><i class="fa fa-remove" ng-click="toggleDialog(false);"></i></div>
+        </header>
+        <footer></footer>
+    </div>
+</div>

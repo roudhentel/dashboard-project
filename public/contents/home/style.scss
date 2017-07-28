@@ -1,0 +1,91 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    .home-head {
+        display: flex;
+        min-height: 50px;
+        border: 1px solid;
+        align-items: center;
+        padding: 0 50px;
+        background: #1c2834;
+        justify-content: space-between;
+
+        img {
+            width: 100px;
+            height: auto;
+        }
+
+        div.rside {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                color: #fff;
+                margin-right: 20px;
+
+                i.fa {
+                    margin-left: 5px;
+                }
+            }
+
+            i.fa {
+                color: #e4e4e4;
+                cursor: pointer;
+                font-size: 150%;
+            }
+        }
+
+        
+    }
+
+    .home-body {
+        display: flex;
+        height: 100%;
+        border: 1px solid;
+    }
+
+    .right-sidebar {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: -20%;
+        width: 20%;
+        height: 100%;
+        border: 1px solid;
+        transition: right .5s;
+        background: #1c2834;
+        border: 1px solid #656565;
+        z-index: 52;
+
+        div.command {
+            position: absolute;
+            width: 100%;
+            min-height: 40px;
+            top: 0;
+            left: 0;
+            padding: 3px;
+
+            button {
+                height: 35px;
+                line-height: 0;
+                border-radius: 0;
+            }
+
+            i.fa {
+                color: #e4e4e4;
+                cursor: pointer;
+                font-size: 150%;
+            }
+        }
+
+        &.active {
+            right: 0;
+        }
+    }
+}

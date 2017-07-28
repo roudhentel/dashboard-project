@@ -9,3 +9,6 @@ document.write('<script src="contents/login/signup.js"></script>');
 
 // home
 document.write('<script src="contents/home/controller.js"></script>');
+
+// dashboard
+document.write('<script src="contents/dashboard/controller.js"></script>');
