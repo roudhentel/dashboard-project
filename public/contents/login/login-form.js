@@ -21,7 +21,7 @@ mainApp.controller("loginFormCtrl", function ($scope, $http, $state) {
             if (res.data.success) {
                 s.gbl.groups = res.data.groups;
 
-                $state.go('home');
+                $state.go('home.dashboard');
             }
             s.loadingFlag = true;
         }, function (err) {
