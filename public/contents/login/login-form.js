@@ -23,10 +23,10 @@ mainApp.controller("loginFormCtrl", function ($scope, $http, $state) {
 
                 $state.go('home.dashboard');
             }
-            s.loadingFlag = true;
+            s.loadingFlag = false;
         }, function (err) {
             console.log(err);
-            s.loadingFlag = true;
+            s.loadingFlag = false;
         });
     };
 });
