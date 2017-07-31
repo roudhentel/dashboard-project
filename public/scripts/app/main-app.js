@@ -1,4 +1,4 @@
-var mainApp = angular.module("mainApp", ["ui.router", "ngMaterial"]);
+var mainApp = angular.module("mainApp", ["ui.router", "ngMaterial", "gridster"]);
 
 mainApp.config(($stateProvider, $urlRouterProvider) => {
     $urlRouterProvider.otherwise('/login/authenticate');

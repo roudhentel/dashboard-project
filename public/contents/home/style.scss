@@ -12,7 +12,7 @@
         border: 1px solid;
         align-items: center;
         padding: 0 50px;
-        background: #1c2834;
+        background: #1A262F;
         justify-content: space-between;
 
         img {
@@ -24,30 +24,66 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 20%;
 
-            span {
-                color: #fff;
-                margin-right: 20px;
+            div.menus {
+                display: flex;
+                width: 100%;
+                justify-content: flex-end;
+                position: relative;
 
-                i.fa {
-                    margin-left: 5px;
+                span {
+                    color: #fff;
+                    margin-right: 20px;
+
+                    i.fa {
+                        margin-left: 5px;
+                    }
+                }
+
+                .name-menu {
+                    position: absolute;
+                    top: 20px;
+                    background: #6f818a;
+                    right: 20px;
+                    width: auto;
+                    display: flex;
+                    flex-direction: column;
+                    z-index: 52;
+                    color: white;
+
+                    .menu-item {
+                        display: flex;
+                        width: 100%;
+                        justify-content: flex-end;
+                        padding: 5px 10px 5px 20px;
+                        min-height: 10px;
+                        cursor: pointer;
+
+                        &.separator {
+                            border-bottom: 1px solid;
+                        }
+                    }
                 }
             }
 
-            i.fa {
-                color: #e4e4e4;
-                cursor: pointer;
-                font-size: 150%;
+            div.bars {
+                min-width: 40px;
+                text-align: right;
+
+                i.fa {
+                    color: #e4e4e4;
+                    cursor: pointer;
+                    font-size: 150%;
+                }
             }
         }
-
-        
     }
 
     .home-body {
         display: flex;
-        height: 100%;
-        border: 1px solid;
+        // min-height: 100%;
+        // border: 1px solid;
     }
 
     .right-sidebar {
@@ -59,7 +95,7 @@
         height: 100%;
         border: 1px solid;
         transition: right .5s;
-        background: #1c2834;
+        background: #1A262F;
         border: 1px solid #656565;
         z-index: 52;
 

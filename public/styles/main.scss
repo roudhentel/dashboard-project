@@ -1,9 +1,30 @@
+@font-face {
+    font-family: 'HelveticaNeueLT';
+    src: url("fonts/HelveticaNeueLTStd-Cn.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeueLT';
+    src: url("fonts/HelveticaNeueLTStd-BlkCn.otf") format("opentype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeueLT';
+    src: url("fonts/HelveticaNeueLTStd-BlkCnO.otf") format("opentype");
+    font-weight: bold;
+    font-style: italic;
+}
+
 html {
     margin: 0;
-    font-family: Verdana, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, sans-serif;
+    font-family: 'HelveticaNeueLT';
 
     body {
-        font-family: Verdana, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, sans-serif;
+        font-family: 'HelveticaNeueLT';
         position: absolute;
         top: 0;
         bottom: 0;
@@ -11,6 +32,7 @@ html {
         right: 0;
         height: 100%;
         margin: 0;
+        background: #10181E;
 
         .main-view {
             display: flex;
@@ -27,7 +49,7 @@ html {
         }
 
         button {
-            font-family: Verdana, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, sans-serif;
+            font-family: 'HelveticaNeueLT';
         }
     }
 }

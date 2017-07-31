@@ -4,8 +4,17 @@
     <div class="home-head">
         <img src="assets/img/entwinedSolutions.png" alt="logo">
         <div class="rside">
-            <span>John Doe <i class="fa fa-sort-down"></i></span>
-            <i class="fa fa-bars" ng-click="rsBarVisible = true;"></i>    
+            <div class="menus">
+                <span>John Doe <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
+                <div class="name-menu" ng-show="toggleNameMenu">
+                    <div class="menu-item" ng-click="gbl.wtoolbxVisible = true;toggleNameMenu = false;">Widget Toolbox</div>
+                    <div class="menu-item separator"></div>
+                    <div class="menu-item" ui-sref="login.authenticate">Logout</div>
+                </div>
+            </div>
+            <div class="bars">
+                <i class="fa fa-bars" ng-click="rsBarVisible = true;"></i>
+            </div>
         </div>
     </div>
     <div class="home-body" ui-view>
