@@ -22,7 +22,7 @@
     <div class="grid-container">
         <div gridster="gridsterOpts" id="grid">
             <ul>
-                <li gridster-item="item.position" ng-repeat="item in widgets track by $index " ng-click="toggleDialog(true, item);">
+                <li gridster-item="item.position" ng-repeat="item in widgets track by $index " ng-dblclick="toggleDialog(true, item);">
                     <div class="part">{{item.description || item.name}}</div>
                     <div class="part" ng-style="{'color': item.color}">{{item.value}}</div>
                     <div class="part">
