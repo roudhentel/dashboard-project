@@ -12,3 +12,6 @@ document.write('<script src="contents/home/controller.js"></script>');
 
 // dashboard
 document.write('<script src="contents/dashboard/controller.js"></script>');
+
+// services
+document.write('<script src="scripts/app/services/dialog.js"></script>');

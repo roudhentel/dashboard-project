@@ -1,5 +1,6 @@
-mainApp.controller("dashboardCtrl", function ($scope, $http) {
+mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
     let s = $scope;
+    let dialogsvc = new Dialog();
     s.dashboard = {
         smVisible: false,
         header: "Support Monitoring Dashboard",
@@ -95,19 +96,40 @@ mainApp.controller("dashboardCtrl", function ($scope, $http) {
     s.addWidget = function (ev, item) {
         if (!s.dashboard.isEdit) return;
         var newItem = JSON.parse(JSON.stringify(item));
-        s.widgets.push({
-            id: 0,
-            widgetid: item.widget_id,
-            name: newItem.name,
-            color: newItem.color,
-            subtitle: newItem.subtitle,
-            description: "",
-            value: 0,
-            position: {
-                sizeX: 1,
-                sizeY: 1
-            }
-        });
+        if (item.name.toLowerCase() === 'location') {
+            dialogsvc.showPrompt("Add Location Widget", "Enter location description", "Description", "Ok", "Cancel", false, "parent", ev).then(function (res) {
+                if (res) {
+                    s.widgets.push({
+                        id: 0,
+                        widgetid: item.widget_id,
+                        name: newItem.name,
+                        color: newItem.color,
+                        subtitle: newItem.subtitle,
+                        description: res,
+                        value: 0,
+                        position: {
+                            sizeX: 1,
+                            sizeY: 1
+                        }
+                    });
+                }
+            });
+        } else {
+            s.widgets.push({
+                id: 0,
+                widgetid: item.widget_id,
+                name: newItem.name,
+                color: newItem.color,
+                subtitle: newItem.subtitle,
+                description: "",
+                value: 0,
+                position: {
+                    sizeX: 1,
+                    sizeY: 1
+                }
+            });
+        }
+
     };
 
     s.removeWidget = function (ev, item) {
@@ -116,7 +138,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http) {
 
     s.displayNotUsed = function (item) {
         let result = s.widgets.find(obj => obj.name === item.name);
-        if (!result) return item;
+        if (!result || item.name.toLowerCase() === 'location') return item;
     }
 
     s.cancelEdit = function () {
