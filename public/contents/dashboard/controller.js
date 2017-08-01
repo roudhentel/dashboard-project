@@ -1,16 +1,23 @@
-mainApp.controller("dashboardCtrl", function ($scope) {
+mainApp.controller("dashboardCtrl", function ($scope, $http) {
     let s = $scope;
     s.dashboard = {
         smVisible: false,
         header: "Support Monitoring Dashboard",
-        isEdit: false
+        isEdit: false,
+        savingFlag: false,
+        selectedItem: {}
     };
 
-    s.toggleDialog = function (_bool) {
+    let setSelectedItem = function (item) {
+        s.dashboard.selectedItem = item;
+    }
+
+    s.toggleDialog = function (_bool, item) {
         s.dashboard.smVisible = _bool;
+        if (item) setSelectedItem(item);
     };
 
-    $scope.gridsterOpts = {
+    s.gridsterOpts = {
         columns: 6,
         minRows: 2,
         maxRows: 6,
@@ -20,110 +27,87 @@ mainApp.controller("dashboardCtrl", function ($scope) {
         floating: true,
         swapping: true,
         draggable: {
-            enabled: true
+            enabled: false
         },
         resizable: {
-            enabled: true,
+            enabled: false,
             handles: ['n', 'e', 's', 'w', 'se', 'sw']
         },
         colWidth: 250,
         rowHeight: 'match'
     };
 
-    s.listToolbox = [
-        {
-            name: "Network",
-            color: "corange",
-            subtitle: "Site Requiring Attention",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "DMP",
-            color: "cdorange",
-            subtitle: "Site Requiring Attention",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Appspace",
-            color: "cpink",
-            value: 0,
-            subtitle: "Site Requiring Attention",
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Total Site Issues Per Month",
-            color: "",
-            subtitle: "",
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Panel",
-            color: "cgreen",
-            value: 0,
-            subtitle: "Site Requiring Attention",
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Local PC",
-            color: "cviolet",
-            subtitle: "Site Requiring Attention",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Other",
-            color: "cdefault",
-            subtitle: "Site Requiring Attention",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Total Sites Monitored",
-            color: "cdefault",
-            subtitle: "",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Sites Requiring Attention",
-            color: "cdefault",
-            subtitle: "",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        },
-        {
-            name: "Location",
-            color: "cdefault",
-            subtitle: "Site Requiring Attention",
-            value: 0,
-            position: { sizeX: 1, sizeY: 1 }
-        }
-    ]
+    s.listToolbox = [];
 
-    // these map directly to gridsterItem options
-    s.widgets = [
-        {
-            name: "Network",
-            color: "corange",
-            subtitle: "Site Requiring Attention",
-            value: 15,
-            position: { sizeX: 1, sizeY: 1, row: 0, col: 0 }
-        },
-        {
-            name: "DMP",
-            color: "cdorange",
-            subtitle: "Site Requiring Attention",
-            value: 18,
-            position: { sizeX: 1, sizeY: 1, row: 0, col: 1 }
-        },
-    ];
+    var getlisttoolbox = function () {
+        $http({
+            method: "GET",
+            url: "/api/widget/getAll"
+        }).then(function (res) {
+            if (res.data.success) {
+                s.listToolbox = res.data.rows;
+
+                getuserwidgets();
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    }
+
+    s.widgets = [];
+    var getuserwidgets = function () {
+        $http({
+            method: "GET",
+            url: "/api/user/getwidgets",
+            params: {
+                userid: 1
+            }
+        }).then(function (res) {
+            if (res.data.success) {
+                var userwidgets = res.data.rows;
+                userwidgets.forEach(item => {
+                    var tool = s.listToolbox.find(obj => obj.widget_id === item.widgetid);
+                    if (tool) {
+                        s.widgets.push({
+                            id: item.user_widget_id,
+                            widgetid: item.widgetid,
+                            name: tool.name,
+                            color: tool.color,
+                            subtitle: tool.subtitle,
+                            description: item.description,
+                            value: 0,
+                            position: {
+                                sizeX: item.width,
+                                sizeY: item.height,
+                                row: item.row,
+                                col: item.col
+                            }
+                        });
+                    }
+
+                });
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    }
 
     s.addWidget = function (ev, item) {
         if (!s.dashboard.isEdit) return;
         var newItem = JSON.parse(JSON.stringify(item));
-        s.widgets.push(newItem);
+        s.widgets.push({
+            id: 0,
+            widgetid: item.widget_id,
+            name: newItem.name,
+            color: newItem.color,
+            subtitle: newItem.subtitle,
+            description: "",
+            value: 0,
+            position: {
+                sizeX: 1,
+                sizeY: 1
+            }
+        });
     };
 
     s.removeWidget = function (ev, item) {
@@ -137,7 +121,7 @@ mainApp.controller("dashboardCtrl", function ($scope) {
 
     s.cancelEdit = function () {
         if (s.dashboard.isEdit) {
-            s.dashboard.isEdit = false;
+            toggleDashboard(false);
             s.widgets = s.tempWidgets;
         } else {
             s.gbl.wtoolbxVisible = false;
@@ -147,12 +131,40 @@ mainApp.controller("dashboardCtrl", function ($scope) {
     s.tempWidgets = [];
     s.editDashboard = function () {
         if (s.dashboard.isEdit) {
-            s.dashboard.isEdit = false;
+            s.dashboard.savingFlag = true;
+            $http({
+                method: "POST",
+                url: "/api/widget/update",
+                data: {
+                    userid: 1,
+                    userwidgets: s.widgets
+                }
+            }).then(function (res) {
+                if (res.data.success) {
+                    toggleDashboard(false);
+                }
+                s.dashboard.savingFlag = false;
+            }, function (err) {
+                console.log(err);
+                s.dashboard.savingFlag = false;
+            });
         } else {
             s.tempWidgets = JSON.parse(JSON.stringify(s.widgets));
-            s.dashboard.isEdit = true;
+            toggleDashboard(true);
         }
     }
+
+    let toggleDashboard = function (_bool) {
+        s.gridsterOpts.draggable.enabled = _bool;
+        s.gridsterOpts.resizable.enabled = _bool;
+        s.dashboard.isEdit = _bool;
+    }
+
+    let init = function () {
+        getlisttoolbox();
+    }
+
+    init();
 
     setTimeout(function () {
         $('#grid').width(1490);

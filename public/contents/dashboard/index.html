@@ -4,12 +4,14 @@
 
     <div class="tool" ng-repeat="tool in listToolbox | filter:displayNotUsed">
         <span>{{tool.name}}</span>
-        <span ng-if="dashboard.isEdit"><i class="fa fa-plus-circle" ng-click="addWidget($event, tool);"></i></span>
+        <span ng-if="dashboard.isEdit && !dashboard.savingFlag"><i class="fa fa-plus-circle" ng-click="addWidget($event, tool);"></i></span>
     </div>
 
     <div class="command">
-        <button class="btn btn-primary" ng-class="dashboard.isEdit ? 'btn-success' : 'btn-primary'" ng-click="editDashboard($event);">{{dashboard.isEdit ? 'Save' : 'Edit'}}</button>
-        <button class="btn" ng-click="cancelEdit();">Cancel</button>
+        <img src="assets/img/Spinner.svg" alt="" ng-if="dashboard.savingFlag">
+        <button class="btn btn-primary" ng-class="dashboard.isEdit ? 'btn-success' : 'btn-primary'" ng-click="editDashboard($event);"
+            ng-disabled="dashboard.savingFlag">{{dashboard.isEdit ? 'Save' : 'Edit'}}</button>
+        <button class="btn" ng-click="cancelEdit();" ng-disabled="dashboard.savingFlag">Cancel</button>
     </div>
 </div>
 <div class="dashboard-page">
@@ -20,18 +22,28 @@
     <div class="grid-container">
         <div gridster="gridsterOpts" id="grid">
             <ul>
-                <li gridster-item="item.position" ng-repeat="item in widgets track by $index ">
-                    <div class="part">{{item.name}}</div>
-                    <div class="part" ng-class="item.color">{{item.value}}</div>
+                <li gridster-item="item.position" ng-repeat="item in widgets track by $index " ng-click="toggleDialog(true, item);">
+                    <div class="part">{{item.description || item.name}}</div>
+                    <div class="part" ng-style="{'color': item.color}">{{item.value}}</div>
                     <div class="part">
                         <div class="label">{{item.subtitle}}</div>
                         <div class="arrow" ng-if="item.subtitle"><i class="fa fa-angle-right"></i></div>
                     </div>
-                    <div class="command" ng-if="dashboard.isEdit">
+                    <div class="command" ng-if="dashboard.isEdit && !dashboard.savingFlag">
                         <i class="fa fa-minus-circle" ng-click="removeWidget($event, item);"></i>
                     </div>
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div class="backmodal" ng-click="toggleDialog(false);" ng-class="dashboard.smVisible ? 'show-modal' : ''" ng-show="dashboard.smVisible"></div>
+
+    <div class="dialog" ng-class="dashboard.smVisible ? 'hover' : ''" ng-show="dashboard.smVisible">
+        <header>
+            <div class="title">{{dashboard.selectedItem.name.toUpperCase()}}</div>
+            <div class="close"><i class="fa fa-remove" ng-click="toggleDialog(false);"></i></div>
+        </header>
+        <footer></footer>
     </div>
 </div>

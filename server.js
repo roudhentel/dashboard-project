@@ -43,6 +43,9 @@ app.use(function (req, res, next) {
 let userRoute = require('./server/routes/user');
 app.use('/api/user', userRoute);
 
+let widgetRoute = require('./server/routes/widget');
+app.use('/api/widget', widgetRoute);
+
 // public folder
 app.use(express.static(path.join(__dirname, 'public')));
 

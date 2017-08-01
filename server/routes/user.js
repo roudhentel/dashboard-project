@@ -1,6 +1,7 @@
 let express = require('express');
 let msRestAzure = require('ms-rest-azure');
 let azureGraph = require('azure-graph');
+let usersvc = require('../services/user');
 
 function UserRoutes() {
     let router = express.Router();
@@ -22,7 +23,7 @@ function UserRoutes() {
                     var acct = users.find(obj => obj.mail === account.username);
                     if (acct) {
                         // if email exist
-                        
+
                         // todo: check database for credentials
 
                         // get account groups
@@ -55,6 +56,16 @@ function UserRoutes() {
             });
         }
     }
+
+    router.get('/getwidgets', function (req, res) {
+        usersvc.getUserWidgets([req.query.userid || 0], function (result, error) {
+            if (!error) {
+                res.status(result.status).json(result.data);
+            } else {
+                res.status(error.status).json(error.data);
+            }
+        });
+    });
 
     return router;
 }
