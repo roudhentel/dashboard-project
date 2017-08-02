@@ -5,7 +5,7 @@
         <img src="assets/img/entwinedSolutions.png" alt="logo">
         <div class="rside">
             <div class="menus">
-                <span>John Doe <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
+                <span>David Joss <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
                 <div class="name-menu" ng-show="toggleNameMenu">
                     <div class="menu-item" ng-click="gbl.wtoolbxVisible = true;toggleNameMenu = false;">Widget Toolbox</div>
                     <div class="menu-item separator"></div>
@@ -24,6 +24,50 @@
     <div class="right-sidebar" ng-class="rsBarVisible ? 'active' : ''">
         <div class="command">
             <i class="fa fa-bars" ng-click="rsBarVisible = false;"></i>
+        </div>
+        <div class="user">
+            <div class="profile-pic">
+                <img src="assets/img/avatar.png">
+            </div>
+            <div class="details">
+                <div class="fullname">David Joss</div>
+                <div class="status"><i class="fa fa-circle online"></i> Online</div>
+            </div>
+        </div>
+        <div class="group-item">
+            <span class="group-header">MAIN NAVIGATION</span>
+            <ul class="group-items">
+                <li class="menu-item">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="menu-item">
+                    <i class="fa fa-hdd-o"></i>
+                    <span>Modem</span>
+                </li>
+                <li class="menu-item">
+                    <i class="fa"></i>
+                    <span>DMP</span>
+                </li>
+                <li class="menu-item">
+                    <i class="fa"></i>
+                    <span>APP</span>
+                </li>
+                <li class="menu-item">
+                    <i class="fa"></i>
+                    <span>Panel</span>
+                </li>
+                <li class="menu-item">
+                    <i class="fa fa-tv"></i>
+                    <span>PC</span>
+                </li>
+            </ul>
+        </div>
+        <div class="group-item">
+            <span class="group-header">ADMINISTRATION</span>
+            <ul class="group-items">
+                
+            </ul>
         </div>
     </div>
 </div>

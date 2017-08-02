@@ -87,6 +87,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
                     }
 
                 });
+                google.charts.setOnLoadCallback(s.drawLineChart);
+
             }
         }, function (err) {
             console.log(err);
@@ -112,6 +114,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
                             sizeY: 1
                         }
                     });
+                    google.charts.setOnLoadCallback(s.drawLineChart);
                 }
             });
         } else {
@@ -154,6 +157,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
     s.editDashboard = function () {
         if (s.dashboard.isEdit) {
             s.dashboard.savingFlag = true;
+            s.gridsterOpts.draggable.enabled = false;
+            s.gridsterOpts.resizable.enabled = false;
             $http({
                 method: "POST",
                 url: "/api/widget/update",
@@ -164,6 +169,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
             }).then(function (res) {
                 if (res.data.success) {
                     toggleDashboard(false);
+                    google.charts.setOnLoadCallback(s.drawLineChart);
                 }
                 s.dashboard.savingFlag = false;
             }, function (err) {
@@ -180,6 +186,62 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
         s.gridsterOpts.draggable.enabled = _bool;
         s.gridsterOpts.resizable.enabled = _bool;
         s.dashboard.isEdit = _bool;
+    }
+
+    s.colors = ['#D37637', '#CE4C3A', '#D62885', '#54D166', '#5968D3'];
+    s.devices = ['Network', 'DMP', 'Apss', 'Panel', 'Local PC'];
+    s.drawLineChart = function () {
+        var widget = s.widgets.find(obj => obj.widgetid === s.gbl.widgetchartid);
+        if (widget) {
+            var head = ["Month"];
+            head.push.apply(head, s.devices);
+            var data = google.visualization.arrayToDataTable([
+                head,
+                ["January", 21, 10, 15, 32, 5],
+                ["February", 32, 3, 5, 23, 12],
+                ["March", 27, 17, 11, 32, 5],
+                ["April", 21, 10, 15, 32, 5],
+                ["May", 21, 10, 15, 32, 5],
+                ["June", 21, 10, 15, 32, 5],
+                ["July", 21, 10, 15, 32, 5],
+                ["August", 21, 10, 15, 32, 5],
+                ["September", 21, 10, 15, 32, 5],
+                ["October", 21, 10, 15, 32, 5],
+                ["November", 21, 10, 15, 32, 5],
+                ["December", 21, 10, 15, 32, 5],
+            ]);
+
+            var options = {
+                focusTarget: 'category',
+                legend: "none",
+                colors: s.colors,
+                hAxis: {
+                    textStyle: {
+                        color: "#FFF",
+                        fontSize: 12
+                    },
+                    slantedText: true,
+                    slantedTextAngle: 40 // here you can even use 180 
+                },
+                vAxis: {
+                    textStyle: {
+                        color: "#FFF"
+                    }
+                },
+                chartArea: {
+                    width: '90%',
+                    height: '60%'
+                },
+                backgroundColor: 'transparent'
+            };
+
+            var formatter = new google.visualization.NumberFormat({ fractionDigits: 2 });
+            formatter.format(data, 1);
+
+            var chart = new google.visualization.LineChart(document.getElementById('lineChart'));
+
+            chart.draw(data, options);
+        }
     }
 
     let init = function () {

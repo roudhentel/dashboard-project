@@ -104,6 +104,10 @@
                     font-size: 170%;
                 }
 
+                &.chart {
+                    height: 10% !important;
+                }
+
                 &:nth-child(2) {
                     // count
                     height: 40%;
@@ -163,6 +167,50 @@
                     }
                 }
             }
+
+            #lineChart {
+                height: 70%;
+                width: 95%;
+                margin: 0 auto;
+
+                // rect {
+                //     fill: transparent;
+                // }
+
+                // text {
+                //     fill: grey;
+                // }
+            }
+
+            div.legend {
+                width: 95%;
+                margin: 0 auto;
+                display: flex;
+                justify-content: center;
+
+                table {
+                    width: 80%;
+                    margin-top: 15px;
+
+                    tr {
+                        td {
+                            padding: 3px;
+                            position: relative;
+                            label {
+                                width: 10px;
+                                height: 10px;
+                                position: absolute;
+                                top: 9px;
+                            }
+
+                            span {
+                                margin-left: 22px;
+                            }
+                        }
+                    }
+                }
+            }
+            
 
             .command {
                 position: absolute;
