@@ -1,4 +1,4 @@
-mainApp.controller("mainCtrl", function ($scope) {
+mainApp.controller("mainCtrl", function ($scope, adalAuthenticationService) {
     google.charts.load("current", { packages: ['corechart'] });
     let s = $scope;
 
@@ -25,4 +25,8 @@ mainApp.controller("mainCtrl", function ($scope) {
             $(this.nextElementSibling).height(this.nextElementSibling.clientHeight);
         });
     }, 50);
+
+    s.logout = function() {
+        adalAuthenticationService.logOut();
+    }
 });

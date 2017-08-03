@@ -24,11 +24,11 @@
                 <img src="assets/img/entwinedSolutions.png" alt="logo">
                 <div class="rside">
                     <div class="menus">
-                        <span>David Joss <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
+                        <span>{{userInfo.profile.name}} <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
                         <div class="name-menu" ng-show="toggleNameMenu">
                             <div class="menu-item" ng-click="gbl.wtoolbxVisible = true;toggleNameMenu = false;">Widget Toolbox</div>
                             <div class="menu-item separator"></div>
-                            <div class="menu-item" ui-sref="login.authenticate">Logout</div>
+                            <div class="menu-item" ng-click="logout();">Logout</div>
                         </div>
                     </div>
                     <div class="bars">
