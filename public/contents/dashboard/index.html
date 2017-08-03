@@ -19,31 +19,43 @@
         <h4 ng-if="!isEdit">{{dashboard.header}}</h4>
         <input type="text" ng-if="isEdit" ng-model="dashboard.header">
     </div>
+
     <div class="grid-container">
         <div gridster="gridsterOpts" id="grid">
             <ul>
                 <li gridster-item="item.position" ng-repeat="item in widgets track by $index " ng-dblclick="toggleDialog(true, item);">
-                    <div class="part" ng-class="item.widgetid === gbl.widgetchartid ? 'chart' : ''">{{item.description || item.name}}</div>
-                    <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">{{item.value}}</div>
-                    <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
-                        <div class="label">{{item.subtitle}}</div>
-                        <div class="arrow"><i class="fa fa-angle-right"></i></div>
-                    </div>
-                    <div id="lineChart" ng-if="item.widgetid === gbl.widgetchartid">
+                    <div class="flip-container" widgetid="{{item.widgetid}}" oncontextmenu="angular.element(this).scope().flipWidget(event, this);">
+                        <div class="flipper">
+                            <div class="front">
+                                <!-- front content -->
+                                <div class="part" ng-class="item.widgetid === gbl.widgetchartid ? 'chart' : ''">{{item.description || item.name}}</div>
+                                <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">{{item.value}}</div>
+                                <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
+                                    <div class="label">{{item.subtitle}}</div>
+                                    <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                                </div>
+                                <div id="lineChart" ng-if="item.widgetid === gbl.widgetchartid">
 
-                    </div>
-                    <div class="legend" ng-if="item.widgetid === gbl.widgetchartid">
-                        <table>
-                            <tr>
-                                <td ng-repeat="d in devices">
-                                    <label ng-style="{'background': colors[$index]}"></label>
-                                    <span>{{d}}</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="command" ng-if="dashboard.isEdit && !dashboard.savingFlag">
-                        <i class="fa fa-minus-circle" ng-click="removeWidget($event, item);"></i>
+                                </div>
+                                <div class="legend" ng-if="item.widgetid === gbl.widgetchartid">
+                                    <table>
+                                        <tr>
+                                            <td ng-repeat="d in devices">
+                                                <label ng-style="{'background': colors[$index]}"></label>
+                                                <span>{{d}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="command" ng-if="dashboard.isEdit && !dashboard.savingFlag">
+                                    <i class="fa fa-minus-circle" ng-click="removeWidget($event, item);"></i>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <!-- back content -->
+                                back
+                            </div>
+                        </div>
                     </div>
                 </li>
             </ul>

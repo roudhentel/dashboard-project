@@ -1,7 +1,7 @@
-var mainApp = angular.module("mainApp", ["ui.router", "ngMaterial", "gridster"]);
+var mainApp = angular.module("mainApp", ["ui.router", "ngRoute", "ngMaterial", "gridster", "AdalAngular"]);
 
-mainApp.config(($stateProvider, $urlRouterProvider) => {
-    $urlRouterProvider.otherwise('/login/authenticate');
+mainApp.config(($stateProvider, $urlRouterProvider, $locationProvider, adalAuthenticationServiceProvider, $httpProvider, $routeProvider) => {
+    $urlRouterProvider.otherwise('/dashboard');
 
     $stateProvider
         .state('login', {
@@ -18,15 +18,32 @@ mainApp.config(($stateProvider, $urlRouterProvider) => {
             url: "/signup",
             templateUrl: "contents/login/signup.html",
             controller: "signupCtrl"
-        })
-        .state('home', {
-            url: "/home",
-            templateUrl: "contents/home/",
-            controller: "homeCtrl"
-        })
-        .state('home.dashboard', {
-            url: "/dashboard",
-            templateUrl: "contents/dashboard/",
-            controller: "dashboardCtrl"
         });
+        // .state('home', {
+        //     url: "/home",
+        //     templateUrl: "contents/home/",
+        //     controller: "homeCtrl",
+        //     requireADLogin: true
+        // })
+        // .state('home.dashboard', {
+        //     url: "/home/dashboard",
+        //     templateUrl: "contents/dashboard/",
+        //     controller: "dashboardCtrl",
+        //     requireADLogin: true
+        // });
+
+    $routeProvider.when("/dashboard", {
+        templateUrl: "contents/dashboard/",
+        controller: "dashboardCtrl",
+        requireADLogin: true
+    });
+
+    // initialize ADAL with your application's information
+    adalAuthenticationServiceProvider.init({
+        instance: 'https://login.microsoftonline.com/',
+        tenant: 'common',
+        clientId: '238ebf3d-2ed8-4e49-ac37-0ac95b6a28a5',
+    }, $httpProvider);
+
+    $locationProvider.hashPrefix('');
 });

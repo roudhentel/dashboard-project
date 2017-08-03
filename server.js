@@ -5,7 +5,7 @@ let morgan = require('morgan');
 let busboy = require('connect-busboy');
 let fileUpload = require('express-fileupload');
 let path = require('path');
-let PORT = process.env.port || 80;
+let PORT = process.env.port || 8080;
 let http = require('http').Server(app);
 
 // for file upload and multi-part post

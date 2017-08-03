@@ -39,6 +39,245 @@ html {
             height: 100%;
             width: 100%;
             flex-direction: column;
+
+            .home-page {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+
+                .home-head {
+                    display: flex;
+                    min-height: 50px;
+                    border: 1px solid;
+                    align-items: center;
+                    padding: 0 50px;
+                    background: #1A262F;
+                    justify-content: space-between;
+
+                    img {
+                        width: 100px;
+                        height: auto;
+                    }
+
+                    div.rside {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 20%;
+
+                        div.menus {
+                            display: flex;
+                            width: 100%;
+                            justify-content: flex-end;
+                            position: relative;
+
+                            span {
+                                color: #fff;
+                                margin-right: 20px;
+
+                                i.fa {
+                                    margin-left: 5px;
+                                }
+                            }
+
+                            .name-menu {
+                                position: absolute;
+                                top: 20px;
+                                background: #6f818a;
+                                right: 20px;
+                                width: auto;
+                                display: flex;
+                                flex-direction: column;
+                                z-index: 52;
+                                color: white;
+
+                                .menu-item {
+                                    display: flex;
+                                    width: 100%;
+                                    justify-content: flex-end;
+                                    padding: 5px 10px 5px 20px;
+                                    min-height: 10px;
+                                    cursor: pointer;
+
+                                    &.separator {
+                                        border-bottom: 1px solid;
+                                    }
+                                }
+                            }
+                        }
+
+                        div.bars {
+                            min-width: 40px;
+                            text-align: right;
+
+                            i.fa {
+                                color: #e4e4e4;
+                                cursor: pointer;
+                                font-size: 150%;
+                            }
+                        }
+                    }
+                }
+
+                .home-body {
+                    display: flex;
+                    flex-direction: column;
+                    // min-height: 100%;
+                    // border: 1px solid;
+                }
+
+                .right-sidebar {
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    right: -15%;
+                    width: 15%;
+                    height: 100%;
+                    border: 1px solid;
+                    transition: right .5s;
+                    background: #1A262F;
+                    border: 1px solid #656565;
+                    z-index: 52;
+
+                    div.command {
+                        position: absolute;
+                        width: 100%;
+                        min-height: 30px;
+                        top: 0;
+                        left: 0;
+                        padding: 3px;
+
+                        button {
+                            height: 35px;
+                            line-height: 0;
+                            border-radius: 0;
+                        }
+
+                        i.fa {
+                            color: #e4e4e4;
+                            cursor: pointer;
+                            font-size: 150%;
+                        }
+                    }
+
+                    div.user {
+                        display: flex;
+                        flex-direction: row;
+                        height: 60px;
+                        width: 100%;
+                        align-items: center;
+                        margin-top: 35px;
+                        background: #273c4c;
+
+                        .profile-pic {
+                            display: flex;
+                            min-width: 80px;
+                            align-items: center;
+                            justify-content: center;
+
+                            img {
+                                width: 45px;
+                                border-radius: 50%;
+                            }
+                        }
+
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            padding-right: 10px;
+
+                            .fullname {
+                                font-size: 16px;
+                                color: #A7C0C9;
+                            }
+
+                            .status {
+                                display: flex;
+                                font-size: 13px;
+                                color: #A7C0C9;
+
+                                i.fa {
+                                    font-size: 9px;
+                                    padding-top: 3px;
+                                    margin-right: 3px;
+                                    
+                                    &.online {
+                                        color: #00FF00;
+                                    }
+
+                                    &.away {
+                                        color: orange;
+                                    }
+
+                                    &.offline {
+                                        color: grey;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    div.group-item {
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+
+                        span.group-header {
+                            height: 40px;
+                            display: flex;
+                            align-items: center;
+                            background: #10181e;
+                            padding: 0 5px;
+                            color: #707f84;
+                            font-size: 12px;
+                            cursor: pointer;
+                        }
+
+                        ul.group-items {
+                            list-style: none;
+                            padding: 0;
+                            transition: height .5s;
+                            overflow: hidden;
+                            margin: 0;
+
+                            li.menu-item {
+                                height: 40px;
+                                display: flex;
+                                align-items: center;
+                                padding: 0 5px 0 15px;
+                                cursor: pointer;
+
+                                i.fa {
+                                    color: #707f84;
+                                    margin-right: 5px;
+                                    width: 15px;
+                                }
+
+                                span {
+                                    color: #707f84;
+                                    font-size: 14px;
+                                }
+
+                                &:hover {
+                                    background: #151f27;
+                                }
+                            }
+
+                            &.hide-list {
+                                height: 0 !important;
+                            }
+                        }
+                    }
+
+                    &.active {
+                        right: 0;
+                    }
+                }
+            }
         }
 
         md-progress-linear {

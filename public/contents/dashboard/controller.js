@@ -1,4 +1,4 @@
-mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
+mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthenticationService) {
     let s = $scope;
     let dialogsvc = new Dialog();
     s.dashboard = {
@@ -244,8 +244,36 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog) {
         }
     }
 
+    s.flipWidget = function (event, elem) {
+        event.preventDefault();
+        console.log(elem);
+        if (elem.attributes.widgetid.value.toString() === s.gbl.widgetchartid.toString()) return;
+        if (elem.classList.contains("hover")) {
+            elem.classList.remove("hover");
+        } else {
+            elem.classList.add("hover");
+        }
+    }
+
+    let getAccountGroup = function () {
+        $http({
+            method: "GET",
+            url: "/api/user/accountGroups",
+            params: {
+                objId: s.userInfo.profile.oid
+            }
+        }).then(function (res) {
+            if (res.data.success) {
+                console.log(res.data.groups);
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    }
+
     let init = function () {
         getlisttoolbox();
+        getAccountGroup();
     }
 
     init();

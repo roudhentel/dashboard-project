@@ -18,13 +18,87 @@
 </head>
 
 <body ng-app="mainApp" ng-controller="mainCtrl" ng-cloak="">
-    <div ui-view class="main-view"></div>
+    <div class="main-view">
+        <div class="home-page">
+            <div class="home-head">
+                <img src="assets/img/entwinedSolutions.png" alt="logo">
+                <div class="rside">
+                    <div class="menus">
+                        <span>David Joss <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
+                        <div class="name-menu" ng-show="toggleNameMenu">
+                            <div class="menu-item" ng-click="gbl.wtoolbxVisible = true;toggleNameMenu = false;">Widget Toolbox</div>
+                            <div class="menu-item separator"></div>
+                            <div class="menu-item" ui-sref="login.authenticate">Logout</div>
+                        </div>
+                    </div>
+                    <div class="bars">
+                        <i class="fa fa-bars" ng-click="rsBarVisible = true;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-body" ng-view>
+
+            </div>
+
+            <div class="right-sidebar" ng-class="rsBarVisible ? 'active' : ''">
+                <div class="command">
+                    <i class="fa fa-bars" ng-click="rsBarVisible = false;"></i>
+                </div>
+                <div class="user">
+                    <div class="profile-pic">
+                        <img src="assets/img/avatar.png">
+                    </div>
+                    <div class="details">
+                        <div class="fullname">David Joss</div>
+                        <div class="status"><i class="fa fa-circle online"></i> Online</div>
+                    </div>
+                </div>
+                <div class="group-item">
+                    <span class="group-header">MAIN NAVIGATION</span>
+                    <ul class="group-items">
+                        <li class="menu-item" ui-sref="home.dashboard">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Dashboard</span>
+                        </li>
+                        <li class="menu-item">
+                            <i class="fa fa-hdd-o"></i>
+                            <span>Modem</span>
+                        </li>
+                        <li class="menu-item">
+                            <i class="fa"></i>
+                            <span>DMP</span>
+                        </li>
+                        <li class="menu-item">
+                            <i class="fa"></i>
+                            <span>APP</span>
+                        </li>
+                        <li class="menu-item">
+                            <i class="fa"></i>
+                            <span>Panel</span>
+                        </li>
+                        <li class="menu-item">
+                            <i class="fa fa-tv"></i>
+                            <span>PC</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="group-item">
+                    <span class="group-header">ADMINISTRATION</span>
+                    <ul class="group-items">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="scripts/lib/jquery.min.js"></script>
     <script src="styles/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="scripts/lib/angular.min.js"></script>
     <script src="scripts/lib/angular-ui-router.min.js"></script>
+    <script src="scripts/lib/angular-route.min.js"></script>
     <script src="scripts/lib/angular-animate.min.js"></script>
     <script src="scripts/lib/angular-aria.min.js"></script>
     <script src="scripts/lib/angular-messages.min.js"></script>
@@ -32,6 +106,8 @@
 
     <script src="scripts/lib/jquery.resize.js"></script>
     <script src="scripts/lib/angular-gridster.js"></script>
+    <script src="scripts/lib/adal.min.js"></script>
+    <script src="scripts/lib/adal-angular.min.js"></script>
     <!-- <script src="scripts/lib/googlechart.js"></script> -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 

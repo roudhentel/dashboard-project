@@ -67,6 +67,24 @@ function UserRoutes() {
         });
     });
 
+    router.get('/accountGroups', function (req, res) {
+        var objId = req.query.objId;
+        msRestAzure.loginWithUsernamePassword(process.env.ADUSERNAME, process.env.ADPASSWORD, {
+            tokenAudience: 'graph', domain: process.env.TENANTID
+        }, function (err, credentials, subscriptions) {
+            if (err) res.status(500).json({ success: false, details: err });
+            var client = new azureGraph(credentials, process.env.TENANTID);
+            if (client) {
+                client.users.getMemberGroups(objId, false, function (err2, groups) {
+                    if (err2) res.status(500).json({ success: false, details: err2 });
+                    getGroupDetails(groups, 0, [], client, res);
+                });
+            } else {
+                res.status(404).json({ success: false, details: "Failed to connect to microsoft azure active directory" });
+            }
+        });
+    })
+
     return router;
 }
 
