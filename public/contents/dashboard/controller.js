@@ -18,6 +18,9 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         if (item) setSelectedItem(item);
     };
 
+    var w = (window.innerHeight * 2) > window.innerWidth ? window.innerWidth / 2 : window.innerHeight;
+    var h = (parseInt(w / 100) * 100);
+    var tileWidth = (h - (h * .10)) / 3;
     s.gridsterOpts = {
         columns: 6,
         minRows: 2,
@@ -34,7 +37,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             enabled: false,
             handles: ['n', 'e', 's', 'w', 'se', 'sw']
         },
-        colWidth: 250,
+        colWidth: tileWidth,
         rowHeight: 'match'
     };
 
@@ -246,7 +249,6 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
 
     s.flipWidget = function (event, elem) {
         event.preventDefault();
-        console.log(elem);
         if (elem.attributes.widgetid.value.toString() === s.gbl.widgetchartid.toString()) return;
         if (elem.classList.contains("hover")) {
             elem.classList.remove("hover");
@@ -279,8 +281,9 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     init();
 
     setTimeout(function () {
-        $('#grid').width(1490);
-        $('.db-header').width(1490);
-        $('.grid-toolbox').width(1490);
+        var w = (6 * tileWidth) - (s.gridsterOpts.margins[1] || 0);
+        $('#grid').width(w);
+        $('.db-header').width(w);
+        $('.grid-toolbox').width(w);
     });
 });

@@ -8,7 +8,7 @@
   },
   "author": "Roudhentel Nagoy",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "azure-graph": "^2.1.0-preview",
     "body-parser": "^1.17.2",
     "connect-busboy": "0.0.2",
@@ -16,12 +16,11 @@
     "express-fileupload": "^0.1.4",
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
+    "http": "0.0.0",
     "morgan": "^1.8.2",
     "ms-rest-azure": "^2.2.3",
     "mysql": "^2.14.0",
-    "nodemon": "^1.11.0"
-  },
-  "dependencies": {
-    "mysql": "^2.14.0"
+    "nodemon": "^1.11.0",
+    "path": "^0.12.7"
   }
 }
