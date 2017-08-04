@@ -1,3 +1,5 @@
+@import '../../styles/mixin';
+
 .grid-toolbox {
     margin: 0 auto 10px;
     height: 50px;
@@ -101,10 +103,26 @@
                 align-items: center;
                 padding: 0 10px 0 15px;
 
+                @include respond-to(md) {
+                    padding: 0 5px;
+                }
+
                 &:nth-child(1) {
                     // title
                     height: 30%;
                     font-size: 170%;
+
+                    @include respond-to(md) {
+                        font-size: 110%;
+                    }
+
+                    @include respond-to(lg) {
+                        font-size: 130%;
+                    }
+
+                    @include respond-to(xlg) {
+                        font-size: 150%;
+                    }
                 }
 
                 &.chart {
@@ -115,6 +133,14 @@
                     // count
                     height: 40%;
                     font-size: 500%;
+
+                    @include respond-to(md) {
+                        font-size: 350%;
+                    }
+
+                    @include respond-to(lg) {
+                        font-size: 400%;
+                    }
 
                     &.corange {
                         color: #D37637;
@@ -147,6 +173,7 @@
                     font-size: 95%;
                     display: flex;
                     flex-direction: row;
+                    justify-content: space-between;
 
                     .label {
                         display: flex;
@@ -159,6 +186,15 @@
                         line-height: 20px;
                         color: #d6d6d6;
                         font-weight: normal;
+
+                        @include respond-to(md){
+                            font-size: 90%;
+                            width: 75%;
+                        }
+
+                        @include respond-to(lg) {
+                            font-size: 100%;
+                        }
                     }
 
                     .arrow {
@@ -167,6 +203,15 @@
                         width: 35%;
                         align-items: center;
                         font-size: 150%;
+                        max-width: 70px;
+
+                        @include respond-to(md) {
+                            width: 25%;
+                        }
+
+                        &:focus, &:active, i:focus, i:active {
+                            outline: none;
+                        }
                     }
                 }
             }
@@ -227,6 +272,10 @@
 
         h4 {
             font-size: 200%;
+
+            @include respond-to(md) {
+                font-size: 180%;
+            }
         }
     }
 

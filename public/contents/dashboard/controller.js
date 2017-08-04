@@ -6,7 +6,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         header: "Support Monitoring Dashboard",
         isEdit: false,
         savingFlag: false,
-        selectedItem: {}
+        selectedItem: {},
+        gridToggle: true
     };
 
     let setSelectedItem = function (item) {
@@ -18,28 +19,39 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         if (item) setSelectedItem(item);
     };
 
-    var w = (window.innerHeight * 2) > window.innerWidth ? window.innerWidth / 2 : window.innerHeight;
-    var h = (parseInt(w / 100) * 100);
-    var tileWidth = (h - (h * .10)) / 3;
-    s.gridsterOpts = {
-        columns: 6,
-        minRows: 2,
-        maxRows: 6,
-        margins: [10, 10],
-        outerMargin: false,
-        pushing: false,
-        floating: true,
-        swapping: true,
-        draggable: {
-            enabled: false
-        },
-        resizable: {
-            enabled: false,
-            handles: ['n', 'e', 's', 'w', 'se', 'sw']
-        },
-        colWidth: tileWidth,
-        rowHeight: 'match'
-    };
+    let setGridOptions = function () {
+        var w = (window.innerHeight * 2) > window.innerWidth ? window.innerWidth / 2 : window.innerHeight;
+        var h = (parseInt(w / 100) * 100);
+        var tileWidth = (h - (h * .10)) / 3;
+        s.gridsterOpts = {
+            columns: 6,
+            minRows: 2,
+            maxRows: 6,
+            margins: [10, 10],
+            outerMargin: false,
+            pushing: false,
+            floating: true,
+            swapping: true,
+            draggable: {
+                enabled: false
+            },
+            resizable: {
+                enabled: false,
+                handles: ['n', 'e', 's', 'w', 'se', 'sw']
+            },
+            colWidth: tileWidth,
+            rowHeight: 'match'
+        };
+
+        setTimeout(function () {
+            var w = (6 * tileWidth) - (s.gridsterOpts.margins[1] || 0);
+            $('#grid').width(w);
+            $('.db-header').width(w);
+            $('.grid-toolbox').width(w);
+        });
+    }
+
+
 
     s.listToolbox = [];
 
@@ -276,14 +288,22 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     let init = function () {
         getlisttoolbox();
         getAccountGroup();
+        setGridOptions();
     }
 
     init();
 
-    setTimeout(function () {
-        var w = (6 * tileWidth) - (s.gridsterOpts.margins[1] || 0);
-        $('#grid').width(w);
-        $('.db-header').width(w);
-        $('.grid-toolbox').width(w);
+    $(window).resize(function () {
+        setTimeout(function () {
+            s.$apply(function () {
+                s.dashboard.gridToggle = false;
+                setGridOptions();
+                setTimeout(function() {
+                    google.charts.setOnLoadCallback(s.drawLineChart);    
+                }, 100);
+                s.dashboard.gridToggle = true;
+            })
+        }, 10);
+
     });
 });

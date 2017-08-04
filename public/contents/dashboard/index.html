@@ -21,7 +21,7 @@
     </div>
 
     <div class="grid-container">
-        <div gridster="gridsterOpts" id="grid">
+        <div gridster="gridsterOpts" id="grid" ng-if="dashboard.gridToggle">
             <ul>
                 <li gridster-item="item.position" ng-repeat="item in widgets track by $index " ng-dblclick="toggleDialog(true, item);">
                     <div class="flip-container" widgetid="{{item.widgetid}}" oncontextmenu="angular.element(this).scope().flipWidget(event, this);">
@@ -32,7 +32,7 @@
                                 <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">{{item.value}}</div>
                                 <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
                                     <div class="label">{{item.subtitle}}</div>
-                                    <div class="arrow"><i class="fa fa-angle-right"></i></div>
+                                    <div class="arrow"><i class="fa fa-angle-right" ng-click="toggleDialog(true, item);"></i></div>
                                 </div>
                                 <div id="lineChart" ng-if="item.widgetid === gbl.widgetchartid">
 
