@@ -25,8 +25,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         var tileWidth = (h - (h * .10)) / 3;
         s.gridsterOpts = {
             columns: 6,
-            minRows: 2,
-            maxRows: 6,
+            minRows: 1,
+            maxRows: 3,
             margins: [10, 10],
             outerMargin: false,
             pushing: false,
@@ -300,7 +300,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 setGridOptions();
                 setTimeout(function() {
                     google.charts.setOnLoadCallback(s.drawLineChart);    
-                }, 100);
+                }, 500);
                 s.dashboard.gridToggle = true;
             })
         }, 10);

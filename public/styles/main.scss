@@ -93,7 +93,7 @@ html {
                                 width: auto;
                                 display: flex;
                                 flex-direction: column;
-                                z-index: 52;
+                                z-index: 53;
                                 color: white;
 
                                 .menu-item {
@@ -127,6 +127,7 @@ html {
                 .home-body {
                     display: flex;
                     flex-direction: column;
+                    position: relative;
                     // min-height: 100%;
                     // border: 1px solid;
                 }
@@ -142,7 +143,7 @@ html {
                     transition: right .5s;
                     background: #1A262F;
                     border: 1px solid #656565;
-                    z-index: 52;
+                    z-index: 53;
 
                     div.command {
                         position: absolute;
