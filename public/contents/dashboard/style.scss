@@ -504,9 +504,17 @@
             .count-display {
                 width: 70%;
 
+                @include respond-to(xlg) {
+                    width: 50%;
+                }
+
                 .description {
                     width: 100%;
                     font-size: 350%;
+
+                    @include respond-to(xlg) {
+                        font-size: 280%;
+                    }
                 }
             }
         }

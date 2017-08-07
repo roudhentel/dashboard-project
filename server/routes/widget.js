@@ -7,9 +7,9 @@ function WidgetRoutes() {
     router.get('/getAll', function (req, res) {
         widgetsvc.getAll([], function (result, error) {
             if (!error) {
-                res.status(result.status).json(result.data);
+                res.status(200).json(result.data);
             } else {
-                res.status(error.status).json(error.data);
+                res.status(500).json(error.data);
             }
         });
     });

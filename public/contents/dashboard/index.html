@@ -115,7 +115,7 @@
                             <td>sitename</td>
                             <td>address</td>
                             <td>123456567</td>
-                            <td ng-repeat="d in visibledevices" class="greenstatus"><label></label><span ng-click="toggleDialog_1(true, d, colors[$index]);"></span></td>
+                            <td ng-repeat="d in visibledevices" class="greenstatus"><label></label><span ng-click="toggleDialog_1(true, d, getDeviceColor(d));"></span></td>
                         </tr>
                     </tbody>
                 </table>

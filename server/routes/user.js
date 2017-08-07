@@ -60,9 +60,9 @@ function UserRoutes() {
     router.get('/getwidgets', function (req, res) {
         usersvc.getUserWidgets([req.query.userid || 0], function (result, error) {
             if (!error) {
-                res.status(result.status).json(result.data);
+                res.status(200).json(result.data);
             } else {
-                res.status(error.status).json(error.data);
+                res.status(500).json(error.data);
             }
         });
     });
