@@ -1,4 +1,4 @@
-mainApp.controller("mainCtrl", function ($scope, adalAuthenticationService) {
+mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationService) {
     google.charts.load("current", { packages: ['corechart'] });
     let s = $scope;
 
@@ -6,8 +6,60 @@ mainApp.controller("mainCtrl", function ($scope, adalAuthenticationService) {
         groups: [],
         wtoolbxVisible: false,
         widgetchartid: 4, // widget id of the chart
-        userGroups: []
+        userGroups: [],
+        selectedView: 0,
+        selectedObjId: 0,
+        widgets: [],
+        listToolbox: []
     };
+
+    s.getuserwidgets = function (objid) {
+        $http({
+            method: "GET",
+            url: "/api/user/getwidgets",
+            params: {
+                userid: objid ? objid : s.userInfo.profile.oid
+            }
+        }).then(function (res) {
+            if (res.data.success) {
+                var userwidgets = res.data.rows;
+                s.gbl.widgets = [];
+                userwidgets.forEach(item => {
+                    var tool = s.gbl.listToolbox.find(obj => obj.widget_id === item.widgetid);
+                    if (tool) {
+                        s.gbl.widgets.push({
+                            id: item.user_widget_id,
+                            widgetid: item.widgetid,
+                            name: tool.name,
+                            color: tool.color,
+                            subtitle: tool.subtitle,
+                            description: item.description,
+                            value: 0,
+                            position: {
+                                sizeX: item.width,
+                                sizeY: item.height,
+                                row: item.row,
+                                col: item.col
+                            },
+                            is_deleted: item.is_deleted
+                        });
+                    }
+
+                });
+                google.charts.setOnLoadCallback(s.drawLineChart);
+
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    }
+
+    s.setSelectedView = function (view, objid) {
+        s.gbl.selectedView = view;
+        s.getuserwidgets(objid);
+        s.gbl.selectedObjId = objid;
+        s.toggleNameMenu = false;
+    }
 
     s.toggleNameMenu = false;
 

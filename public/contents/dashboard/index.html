@@ -2,7 +2,7 @@
 <div class="grid-toolbox" ng-if="gbl.wtoolbxVisible">
     <label>Widget toolbox</label>
 
-    <div class="tool" ng-repeat="tool in listToolbox | filter:displayNotUsed">
+    <div class="tool" ng-repeat="tool in gbl.listToolbox | filter:displayNotUsed">
         <span>{{tool.name}}</span>
         <span ng-if="dashboard.isEdit && !dashboard.savingFlag"><i class="fa fa-plus-circle" ng-click="addWidget($event, tool);"></i></span>
     </div>
@@ -23,7 +23,7 @@
     <div class="grid-container">
         <div gridster="gridsterOpts" id="grid" ng-if="dashboard.gridToggle">
             <ul>
-                <li gridster-item="item.position" ng-repeat="item in widgets | filter:{ is_deleted: 0 } track by $index" ng-dblclick="toggleDialog(true, item);">
+                <li gridster-item="item.position" ng-repeat="item in gbl.widgets | filter:{ is_deleted: 0 } track by $index" ng-dblclick="toggleDialog(true, item);">
                     <div class="flip-container" widgetid="{{item.widgetid}}" oncontextmenu="angular.element(this).scope().flipWidget(event, this);">
                         <div class="flipper">
                             <div class="front">

@@ -58,65 +58,22 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         });
     }
 
-
-
-    s.listToolbox = [];
-
     var getlisttoolbox = function () {
         $http({
             method: "GET",
             url: "/api/widget/getAll"
         }).then(function (res) {
             if (res.data.success) {
-                s.listToolbox = res.data.rows;
+                s.gbl.listToolbox = res.data.rows;
 
-                getuserwidgets();
+                s.getuserwidgets();
             }
         }, function (err) {
             console.log(err);
         });
     }
 
-    s.widgets = [];
-    var getuserwidgets = function () {
-        $http({
-            method: "GET",
-            url: "/api/user/getwidgets",
-            params: {
-                userid: s.userInfo.profile.oid
-            }
-        }).then(function (res) {
-            if (res.data.success) {
-                var userwidgets = res.data.rows;
-                userwidgets.forEach(item => {
-                    var tool = s.listToolbox.find(obj => obj.widget_id === item.widgetid);
-                    if (tool) {
-                        s.widgets.push({
-                            id: item.user_widget_id,
-                            widgetid: item.widgetid,
-                            name: tool.name,
-                            color: tool.color,
-                            subtitle: tool.subtitle,
-                            description: item.description,
-                            value: 0,
-                            position: {
-                                sizeX: item.width,
-                                sizeY: item.height,
-                                row: item.row,
-                                col: item.col
-                            },
-                            is_deleted: item.is_deleted
-                        });
-                    }
-
-                });
-                google.charts.setOnLoadCallback(s.drawLineChart);
-
-            }
-        }, function (err) {
-            console.log(err);
-        });
-    }
+    
 
     s.addWidget = function (ev, item) {
         if (!s.dashboard.isEdit) return;
@@ -124,7 +81,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         if (item.name.toLowerCase() === 'location') {
             dialogsvc.showPrompt("Add Location Widget", "Enter location description", "Description", "Ok", "Cancel", false, "parent", ev).then(function (res) {
                 if (res) {
-                    s.widgets.push({
+                    s.gbl.widgets.push({
                         id: 0,
                         widgetid: item.widget_id,
                         name: newItem.name,
@@ -142,7 +99,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 }
             });
         } else {
-            s.widgets.push({
+            s.gbl.widgets.push({
                 id: 0,
                 widgetid: item.widget_id,
                 name: newItem.name,
@@ -165,14 +122,14 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     }
 
     s.displayNotUsed = function (item) {
-        let result = s.widgets.find(obj => obj.name === item.name && obj.is_deleted === 0);
+        let result = s.gbl.widgets.find(obj => obj.name === item.name && obj.is_deleted === 0);
         if (!result || item.name.toLowerCase() === 'location') return item;
     }
 
     s.cancelEdit = function () {
         if (s.dashboard.isEdit) {
             toggleDashboard(false);
-            s.widgets = s.tempWidgets;
+            s.gbl.widgets = s.tempWidgets;
         } else {
             s.gbl.wtoolbxVisible = false;
         }
@@ -188,8 +145,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 method: "POST",
                 url: "/api/widget/update",
                 data: {
-                    userid: s.userInfo.profile.oid,
-                    userwidgets: s.widgets
+                    userid: s.gbl.selectedView === 0 ? s.userInfo.profile.oid : s.gbl.selectedObjId,
+                    userwidgets: s.gbl.widgets
                 }
             }).then(function (res) {
                 if (res.data.success) {
@@ -202,7 +159,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 s.dashboard.savingFlag = false;
             });
         } else {
-            s.tempWidgets = JSON.parse(JSON.stringify(s.widgets));
+            s.tempWidgets = JSON.parse(JSON.stringify(s.gbl.widgets));
             toggleDashboard(true);
         }
     }
@@ -216,7 +173,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     s.colors = ['#D37637', '#CE4C3A', '#D62885', '#54D166', '#5968D3'];
     s.devices = ['Network', 'DMP', 'Apps', 'Panel', 'Local PC'];
     s.drawLineChart = function () {
-        var widget = s.widgets.find(obj => obj.widgetid === s.gbl.widgetchartid);
+        var widget = s.gbl.widgets.find(obj => obj.widgetid === s.gbl.widgetchartid);
         if (widget) {
             var head = ["Month"];
             head.push.apply(head, s.devices);
@@ -290,10 +247,24 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             if (res.data.success) {
                 s.gbl.userGroups = res.data.groups;
                 console.log(s.gbl.userGroups);
+                setTimeout(function() {
+                    fixWidthOfUserViews();
+                }, 100);
             }
         }, function (err) {
             console.log(err);
         });
+    }
+
+    let fixWidthOfUserViews = function() {
+        var elem = $("#user-views");
+        if (elem.hasClass('open')) {
+            $(elem.children()[2]).width('auto');
+            $(elem.children()[2])[0].style.left = "-" + ($(elem.children()[2]).width() + 1) + "px";
+        } else {
+            $(elem.children()[2]).width(0);
+            $(elem.children()[2])[0].style.left = "-300px";
+        }
     }
 
     let init = function () {

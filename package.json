@@ -6,7 +6,7 @@
     "start": "node server"
   },  
 "license": "Apache",
-"engines": {
+"dependencies": {
     "azure-graph": "^2.1.0-preview",
     "body-parser": "^1.17.2",
     "connect-busboy": "0.0.2",

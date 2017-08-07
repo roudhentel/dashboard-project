@@ -108,6 +108,7 @@ html {
                                     min-height: 10px;
                                     cursor: pointer;
                                     position: relative;
+                                    border-bottom: 1px solid #10181e;
 
                                     &:active, &:focus {
                                         outline: none;
@@ -116,12 +117,12 @@ html {
                                     &.sub-menu {
                                         justify-content: space-between;   
 
-                                        i:after {
+                                        i.toggle:after {
                                             content: "\f104";
                                         }
 
                                         &.open {
-                                            i:after {
+                                            i.toggle:after {
                                                 content: "\f105";
                                             }
                                         }
