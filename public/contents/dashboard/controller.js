@@ -16,10 +16,28 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         s.dashboard.selectedItem = item;
     }
 
+    s.colors = ['#D37637', '#CE4C3A', '#D62885', '#54D166', '#5968D3'];
+    s.devices = ['Network', 'DMP', 'Apps', 'Panel', 'Local PC'];
+    s.visibledevices = [];
     s.toggleDialog = function (_bool, item) {
         s.dashboard.smVisible = _bool;
-        if (item) setSelectedItem(item);
+        if (item) {
+            setSelectedItem(item);
+            if (item.name.toLowerCase().indexOf("sites requiring") > -1) {
+                s.visibledevices = s.devices;
+            } else {
+                s.visibledevices = [item.name];
+            }
+        }
     };
+
+    s.getDeviceColor = function (device) {
+        var d = s.devices.find(obj => obj.toLowerCase() === device.toLowerCase().substr(0, obj.length));
+        if (d) {
+            var idx = s.devices.indexOf(d);
+            if (idx > -1) return s.colors[idx];
+        }
+    }
 
     s.toggleDialog_1 = function (_bool, item, color) {
         s.dashboard.sdVisible = _bool;
@@ -72,8 +90,6 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             console.log(err);
         });
     }
-
-    
 
     s.addWidget = function (ev, item) {
         if (!s.dashboard.isEdit) return;
@@ -170,8 +186,6 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         s.dashboard.isEdit = _bool;
     }
 
-    s.colors = ['#D37637', '#CE4C3A', '#D62885', '#54D166', '#5968D3'];
-    s.devices = ['Network', 'DMP', 'Apps', 'Panel', 'Local PC'];
     s.drawLineChart = function () {
         var widget = s.gbl.widgets.find(obj => obj.widgetid === s.gbl.widgetchartid);
         if (widget) {
@@ -247,7 +261,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             if (res.data.success) {
                 s.gbl.userGroups = res.data.groups;
                 console.log(s.gbl.userGroups);
-                setTimeout(function() {
+                setTimeout(function () {
                     fixWidthOfUserViews();
                 }, 100);
             }
@@ -256,7 +270,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         });
     }
 
-    let fixWidthOfUserViews = function() {
+    let fixWidthOfUserViews = function () {
         var elem = $("#user-views");
         if (elem.hasClass('open')) {
             $(elem.children()[2]).width('auto');
