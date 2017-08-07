@@ -326,6 +326,10 @@
                 width: 30%;
                 justify-content: flex-start;
                 font-size: 30px;
+
+                @include respond-to(lg) {
+                    font-size: 27px;
+                }
             }
 
             .count-display {
@@ -342,6 +346,10 @@
                     font-size: 550%;
                     justify-content: center;
                     align-items: center;
+
+                    @include respond-to(lg) {
+                        font-size: 500%;
+                    }
                 }
 
                 .description {
@@ -349,6 +357,10 @@
                     width: 70%;
                     align-items: center;
                     font-size: 150%;
+
+                    @include respond-to(lg) {
+                        font-size: 140%;
+                    }
                 }
 
             }
@@ -499,6 +511,10 @@
             .title {
                 min-width: 30%;
                 width: auto;
+
+                @include respond-to(lg) {
+                    font-size: 24px;
+                }
             }
 
             .count-display {
@@ -508,12 +524,28 @@
                     width: 50%;
                 }
 
+                @include respond-to(xxlg) {
+                    width: 50%;
+                }
+
+                @include respond-to(lg) {
+                    width: 50%;
+                }
+
                 .description {
                     width: 100%;
                     font-size: 350%;
 
+                    @include respond-to(lg) {
+                        font-size: 225%;
+                    }
+
                     @include respond-to(xlg) {
                         font-size: 280%;
+                    }
+
+                    @include respond-to(xxlg) {
+                        font-size: 300%;
                     }
                 }
             }
@@ -533,6 +565,10 @@
                 bottom: 0;
                 left: 10px;
                 right: 0;
+
+                @include respond-to(lg){
+                    width: 110px;
+                }
 
                 ul {
                     list-style-type: none;
