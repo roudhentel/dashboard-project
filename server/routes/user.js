@@ -76,8 +76,15 @@ function UserRoutes() {
             var client = new azureGraph(credentials, process.env.TENANTID);
             if (client) {
                 client.users.getMemberGroups(objId, false, function (err2, groups) {
-                    if (err2) res.status(500).json({ success: false, details: err2 });
-                    getGroupDetails(groups, 0, [], client, res);
+                    if (err2) {
+                        res.status(500).json({ success: false, details: err2 });
+                    } else {
+                        if (groups) {
+                            getGroupDetails(groups, 0, [], client, res);
+                        } else {
+                            res.status(500).json({ success: false, details: "No groups found." });
+                        }
+                    }
                 });
             } else {
                 res.status(404).json({ success: false, details: "Failed to connect to microsoft azure active directory" });

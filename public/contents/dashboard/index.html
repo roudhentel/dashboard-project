@@ -23,11 +23,40 @@
     <div class="grid-container">
         <div gridster="gridsterOpts" id="grid" ng-if="dashboard.gridToggle">
             <ul>
-                <li gridster-item="item.position" ng-repeat="item in widgets track by $index " ng-dblclick="toggleDialog(true, item);">
+                <li gridster-item="item.position" ng-repeat="item in widgets | filter:{ is_deleted: 0 } track by $index" ng-dblclick="toggleDialog(true, item);">
                     <div class="flip-container" widgetid="{{item.widgetid}}" oncontextmenu="angular.element(this).scope().flipWidget(event, this);">
                         <div class="flipper">
                             <div class="front">
                                 <!-- front content -->
+                                <div class="part" ng-class="item.widgetid === gbl.widgetchartid ? 'chart' : ''">{{item.description || item.name}}</div>
+                                <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">{{item.value}}</div>
+                                <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
+                                    <div class="label">{{item.subtitle}}</div>
+                                    <div class="arrow"><i class="fa fa-angle-right" ng-click="toggleDialog(true, item);"></i></div>
+                                </div>
+                                <div class="part" ng-if="!item.subtitle && item.widgetid !== 4">
+                                    <div class="label"></div>
+                                    <div class="arrow"><i class="fa fa-ellipsis-h" ng-click="toggleDialog(true, item);"></i></div>
+                                </div>
+                                <div id="lineChart" ng-if="item.widgetid === gbl.widgetchartid">
+
+                                </div>
+                                <div class="legend" ng-if="item.widgetid === gbl.widgetchartid">
+                                    <table>
+                                        <tr>
+                                            <td ng-repeat="d in devices">
+                                                <label ng-style="{'background': colors[$index]}"></label>
+                                                <span>{{d}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="command" ng-if="dashboard.isEdit && !dashboard.savingFlag">
+                                    <i class="fa fa-minus-circle" ng-click="removeWidget($event, item);"></i>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <!-- back content -->
                                 <div class="part" ng-class="item.widgetid === gbl.widgetchartid ? 'chart' : ''">{{item.description || item.name}}</div>
                                 <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">{{item.value}}</div>
                                 <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
@@ -51,10 +80,6 @@
                                     <i class="fa fa-minus-circle" ng-click="removeWidget($event, item);"></i>
                                 </div>
                             </div>
-                            <div class="back">
-                                <!-- back content -->
-                                back
-                            </div>
                         </div>
                     </div>
                 </li>
@@ -66,9 +91,63 @@
 
     <div class="dialog" ng-class="dashboard.smVisible ? 'hover' : ''" ng-show="dashboard.smVisible">
         <header>
-            <div class="title">{{dashboard.selectedItem.name.toUpperCase()}}</div>
+            <div class="title">{{dashboard.selectedItem.name}}<span ng-if="dashboard.selectedItem.subtitle && dashboard.selectedItem.widgetid !== 4">&nbsp;Requiring Attention</span></div>
+            <div class="count-display">
+                <div class="counter" ng-style="{'color': dashboard.selectedItem.color}">11</div>
+                <div class="description">Site<br>Requiring Attention</div>
+            </div>
             <div class="close"><i class="fa fa-remove" ng-click="toggleDialog(false);"></i></div>
         </header>
+        <div class="dialog-body">
+            <h4>Site List</h4>
+            <div class="display">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Site Name</th>
+                            <th>Location</th>
+                            <th>Location Code</th>
+                            <th ng-style="{'color': colors[$index]}" ng-repeat="d in devices">{{d}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="a in [1,2,3,4,5,6,7,8,9,10,11]">
+                            <td>sitename</td>
+                            <td>address</td>
+                            <td>123456567</td>
+                            <td ng-repeat="d in devices" class="greenstatus"><label></label><span ng-click="toggleDialog_1(true, d, colors[$index]);"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <footer></footer>
+    </div>
+
+    <div class="backmodal_1" ng-click="toggleDialog_1(false);" ng-class="dashboard.sdVisible ? 'show-modal' : ''" ng-show="dashboard.sdVisible"></div>
+
+    <div class="dialog_1" ng-class="dashboard.sdVisible ? 'hover' : ''" ng-show="dashboard.sdVisible">
+        <header>
+            <div class="title">Site Name<span>&nbsp;Details</span></div>
+            <div class="count-display">
+                <div class="description" ng-style="{'color': dashboard.selectedDevice.color}">{{dashboard.selectedDevice.name}}&nbsp;Status</div>
+            </div>
+            <div class="close"><i class="fa fa-remove" ng-click="toggleDialog_1(false);"></i></div>
+        </header>
+        <div class="dialog-body">
+            <div class="tab">
+                <ul>
+                    <li>Item</li>
+                    <li>Status</li>
+                    <li>Details</li>
+                    <li>All</li>
+                </ul>
+            </div>
+            <div class="tab-view">
+
+            </div>
+        </div>
         <footer></footer>
     </div>
 </div>

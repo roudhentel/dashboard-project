@@ -1,14 +1,12 @@
 {
   "name": "dashboard-project",
   "version": "1.0.0",
-  "description": "Dashboard project",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Roudhentel Nagoy",
-  "license": "ISC",
-  "dependencies": {
+    "start": "node server"
+  },  
+"license": "Apache",
+"engines": {
     "azure-graph": "^2.1.0-preview",
     "body-parser": "^1.17.2",
     "connect-busboy": "0.0.2",
@@ -24,3 +22,4 @@
     "path": "^0.12.7"
   }
 }
+

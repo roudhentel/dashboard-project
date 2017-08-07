@@ -46,7 +46,8 @@ function WidgetRoutes() {
                     widgets[idx].position.sizeX,
                     widgets[idx].position.sizeY,
                     widgets[idx].position.row,
-                    widgets[idx].position.col
+                    widgets[idx].position.col,
+                    widgets[idx].is_deleted
                 ], function (result, error) {
                     if (error) res.status(500).json({ success: false });
 

@@ -5,7 +5,8 @@ mainApp.controller("mainCtrl", function ($scope, adalAuthenticationService) {
     s.gbl = {
         groups: [],
         wtoolbxVisible: false,
-        widgetchartid: 4 // widget id of the chart
+        widgetchartid: 4, // widget id of the chart
+        userGroups: []
     };
 
     s.toggleNameMenu = false;
@@ -26,7 +27,19 @@ mainApp.controller("mainCtrl", function ($scope, adalAuthenticationService) {
         });
     }, 50);
 
-    s.logout = function() {
+    s.logout = function () {
         adalAuthenticationService.logOut();
+    }
+
+    s.showSubMenu = function (ev, _bool) {
+        if (!$(ev.currentTarget).hasClass('open')) {
+            $(ev.currentTarget.children[2]).width('auto');
+            $(ev.currentTarget.children[2])[0].style.left = "-" + ($(ev.currentTarget.children[2]).width() + 1) + "px";
+            $(ev.currentTarget).addClass('open');
+        } else {
+            $(ev.currentTarget.children[2]).width(0);
+            $(ev.currentTarget.children[2])[0].style.left = "-300px";
+            $(ev.currentTarget).removeClass('open');
+        }
     }
 });

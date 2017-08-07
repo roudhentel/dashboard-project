@@ -7,7 +7,9 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         isEdit: false,
         savingFlag: false,
         selectedItem: {},
-        gridToggle: true
+        gridToggle: true,
+        sdVisible: false,
+        selectedDevice: {}
     };
 
     let setSelectedItem = function (item) {
@@ -18,6 +20,11 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         s.dashboard.smVisible = _bool;
         if (item) setSelectedItem(item);
     };
+
+    s.toggleDialog_1 = function (_bool, item, color) {
+        s.dashboard.sdVisible = _bool;
+        s.dashboard.selectedDevice = { name: item, color: color };
+    }
 
     let setGridOptions = function () {
         var w = (window.innerHeight * 2) > window.innerWidth ? window.innerWidth / 2 : window.innerHeight;
@@ -76,7 +83,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             method: "GET",
             url: "/api/user/getwidgets",
             params: {
-                userid: 1
+                userid: s.userInfo.profile.oid
             }
         }).then(function (res) {
             if (res.data.success) {
@@ -97,7 +104,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                                 sizeY: item.height,
                                 row: item.row,
                                 col: item.col
-                            }
+                            },
+                            is_deleted: item.is_deleted
                         });
                     }
 
@@ -127,7 +135,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                         position: {
                             sizeX: 1,
                             sizeY: 1
-                        }
+                        },
+                        is_deleted: item.is_deleted
                     });
                     google.charts.setOnLoadCallback(s.drawLineChart);
                 }
@@ -144,18 +153,19 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 position: {
                     sizeX: 1,
                     sizeY: 1
-                }
+                },
+                is_deleted: 0
             });
         }
 
     };
 
     s.removeWidget = function (ev, item) {
-        s.widgets.splice(s.widgets.indexOf(item), 1);
+        item.is_deleted = 1;
     }
 
     s.displayNotUsed = function (item) {
-        let result = s.widgets.find(obj => obj.name === item.name);
+        let result = s.widgets.find(obj => obj.name === item.name && obj.is_deleted === 0);
         if (!result || item.name.toLowerCase() === 'location') return item;
     }
 
@@ -178,7 +188,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 method: "POST",
                 url: "/api/widget/update",
                 data: {
-                    userid: 1,
+                    userid: s.userInfo.profile.oid,
                     userwidgets: s.widgets
                 }
             }).then(function (res) {
@@ -204,7 +214,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     }
 
     s.colors = ['#D37637', '#CE4C3A', '#D62885', '#54D166', '#5968D3'];
-    s.devices = ['Network', 'DMP', 'Apss', 'Panel', 'Local PC'];
+    s.devices = ['Network', 'DMP', 'Apps', 'Panel', 'Local PC'];
     s.drawLineChart = function () {
         var widget = s.widgets.find(obj => obj.widgetid === s.gbl.widgetchartid);
         if (widget) {
@@ -278,7 +288,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             }
         }).then(function (res) {
             if (res.data.success) {
-                console.log(res.data.groups);
+                s.gbl.userGroups = res.data.groups;
+                console.log(s.gbl.userGroups);
             }
         }, function (err) {
             console.log(err);
@@ -298,8 +309,8 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             s.$apply(function () {
                 s.dashboard.gridToggle = false;
                 setGridOptions();
-                setTimeout(function() {
-                    google.charts.setOnLoadCallback(s.drawLineChart);    
+                setTimeout(function () {
+                    google.charts.setOnLoadCallback(s.drawLineChart);
                 }, 500);
                 s.dashboard.gridToggle = true;
             })

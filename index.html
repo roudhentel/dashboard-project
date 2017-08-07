@@ -26,6 +26,14 @@
                     <div class="menus">
                         <span>{{userInfo.profile.name}} <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
                         <div class="name-menu" ng-show="toggleNameMenu">
+                            <div class="menu-item sub-menu" ng-click="showSubMenu($event);">
+                                <i class="fa"></i>
+                                <label>View</label>
+                                <ul>
+                                    <li>My View</li>
+                                    <li ng-repeat="g in gbl.userGroups">{{g.displayName}}</li>
+                                </ul>
+                            </div>
                             <div class="menu-item" ng-click="gbl.wtoolbxVisible = true;toggleNameMenu = false;">Widget Toolbox</div>
                             <div class="menu-item separator"></div>
                             <div class="menu-item" ng-click="logout();">Logout</div>
