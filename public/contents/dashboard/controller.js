@@ -51,7 +51,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         s.gridsterOpts = {
             columns: 6,
             minRows: 1,
-            maxRows: 3,
+            maxRows: 5,
             margins: [10, 10],
             outerMargin: false,
             pushing: false,
