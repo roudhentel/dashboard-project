@@ -84,9 +84,67 @@
     .grid-container {
         display: block;
         overflow: hidden;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        margin: auto;
 
-        .gridster-mobile {
-            height: auto !important;
+        @include respond-to(xs) {
+            display: flex;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: auto;
+            position: initial;
+        }
+
+        @include respond-to(sm) {
+            display: flex;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: auto;
+            position: initial;
+        }
+
+        .gridster {
+            @include respond-to(xs) {
+                height: auto !important;
+                width: 100% !important;
+
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: 100%;
+
+                    li.gridster-item {
+                        position: initial;
+                        height: 150px !important;
+                        width: 90% !important;
+                        margin: 10px auto !important;
+                    }
+                }
+            }
+
+            @include respond-to(sm) {
+                height: auto !important;
+                width: 100% !important;
+
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: 100%;
+
+                    li.gridster-item {
+                        position: initial;
+                        height: 150px !important;
+                        width: 90% !important;
+                        margin: 10px auto !important;
+                    }
+                }
+            }            
         }
 
         .gridster-item {
@@ -169,6 +227,14 @@
                         line-height: 20px;
                         color: #d6d6d6;
                         font-weight: normal;
+                        
+                        @include respond-to(xs) {
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            width: 190px;
+                            display: inline-block;
+                        }
 
                         @include respond-to(md){
                             font-size: 90%;
@@ -304,6 +370,14 @@
 
         transition: 0.3s;
 
+        @include respond-to(xs) {
+            height: 90%;
+        }
+
+        @include respond-to(sm) {
+            height: 90%;
+        }
+
         &.hover {
             width: 80%;
         }
@@ -319,6 +393,16 @@
             align-items: center;
             border-bottom: 1px solid #4a5a6b;
 
+            @include respond-to(xs) {
+                flex-direction: column;
+                height: 100px;
+            }
+
+            @include respond-to(sm) {
+                flex-direction: column;
+                height: 100px;
+            }
+
             .title, .close {
                 display: flex;
                 justify-content: center;
@@ -330,6 +414,18 @@
                 width: 30%;
                 justify-content: flex-start;
                 font-size: 30px;
+
+                @include respond-to(xs) {
+                    width: 100%;
+                    font-size: 19px;
+                    margin-top: 5px;
+                }
+
+                @include respond-to(sm) {
+                    width: 100%;
+                    font-size: 19px;
+                    margin-top: 5px;
+                }
 
                 @include respond-to(lg) {
                     font-size: 27px;
@@ -347,6 +443,18 @@
                 width: 50%;
                 height: 100%;
 
+                @include respond-to(xs) {
+                    width: 100%;
+                    font-size: 10px;
+                    align-items: flex-start;
+                }
+
+                @include respond-to(sm) {
+                    width: 100%;
+                    font-size: 10px;
+                    align-items: flex-start;
+                }
+
                 .counter {
                     display: flex;
                     width: 30%;
@@ -355,6 +463,14 @@
                     font-size: 550%;
                     justify-content: center;
                     align-items: center;
+
+                    @include respond-to(xs) {
+                        width: 50px;
+                    }
+
+                    @include respond-to(sm) {
+                        width: 50px;
+                    }
 
                     @include respond-to(lg) {
                         font-size: 500%;
@@ -387,6 +503,18 @@
                 width: 30px;
                 justify-content: flex-end;
                 color: #FFF;
+
+                @include respond-to(xs) {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                }
+
+                @include respond-to(sm) {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                }
             }
         }
 
@@ -397,11 +525,24 @@
             height: 80%;
 
             h4 {
+                display: flex;
+                align-items: center;
                 font-size: 200%;
                 border-bottom: 1px solid #4a5a6b;
                 margin: 0;
                 padding: 10px 20px;
                 height: 10%;
+                min-height: 40px;
+
+                @include respond-to(xs) {
+                    font-size: 21px;
+                    padding: 5px 20px;
+                }
+
+                @include respond-to(sm) {
+                    font-size: 21px;
+                    padding: 5px 20px;
+                }
             }
             
             .display {
@@ -419,6 +560,10 @@
                     width: 100%;
                     border-collapse: collapse;
 
+                    @include respond-to(xs) {
+                        width: auto;
+                    }
+
                     thead {
                         tr {
                             border-bottom: 1px solid #4a5a6b;
@@ -432,6 +577,32 @@
 
                                 &:nth-child(n+4){
                                     width: 150px;
+                                }
+
+                                @include respond-to(xs) {
+                                    font-size: 13px;
+
+                                    &:nth-child(-n+3) {
+                                        min-width: 75px;
+                                        color: #FFF;
+                                    }
+
+                                    &:nth-child(n+4){
+                                        min-width: 55px;
+                                    }
+                                }
+
+                                @include respond-to(sm) {
+                                    font-size: 13px;
+
+                                    &:nth-child(-n+3) {
+                                        min-width: 75px;
+                                        color: #FFF;
+                                    }
+
+                                    &:nth-child(n+4){
+                                        min-width: 55px;
+                                    }
                                 }
                             }
                         }
@@ -525,11 +696,27 @@
         z-index: 61;
         height: 50%;
 
+        @include respond-to(xs) {
+            height: 85%;
+        }
+
+        @include respond-to(sm) {
+            height: 85%;
+        }
+
         &.hover {
             width: 40%;
 
             @include respond-to(md) {
                 width: 60%;
+            }
+
+            @include respond-to(xs) {
+                width: 80%;
+            }
+
+            @include respond-to(sm) {
+                width: 80%;
             }
         }
 
@@ -546,6 +733,14 @@
             .count-display {
                 width: 70%;
 
+                @include respond-to(xs) {
+                    width: 100%;
+                }
+
+                @include respond-to(sm) {
+                    width: 100%;
+                }
+
                 @include respond-to(xlg) {
                     width: 50%;
                 }
@@ -561,6 +756,14 @@
                 .description {
                     width: 100%;
                     font-size: 350%;
+
+                    @include respond-to(xs) {
+                        justify-content: center;
+                    }
+
+                    @include respond-to(sm) {
+                        justify-content: center;
+                    }
 
                     @include respond-to(md) {
                         font-size: 240%;
@@ -595,6 +798,14 @@
                 bottom: 0;
                 left: 10px;
                 right: 0;
+
+                @include respond-to(xs) {
+                    width: 90px;
+                }
+
+                @include respond-to(sm) {
+                    width: 90px;
+                }
 
                 @include respond-to(md) {
                     width: 120px;

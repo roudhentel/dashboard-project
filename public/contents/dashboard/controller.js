@@ -47,7 +47,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     let setGridOptions = function () {
         var w = (window.innerHeight * 2) > window.innerWidth ? window.innerWidth / 2 : window.innerHeight;
         var h = (parseInt(w / 100) * 100);
-        var tileWidth = (h - (h * .10)) / 3;
+        var tileWidth = window.innerWidth < 769 ? 'auto' : (h - (h * .10)) / 3;
         s.gridsterOpts = {
             columns: 6,
             minRows: 1,
@@ -68,11 +68,18 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             rowHeight: 'match'
         };
 
+        console.log(tileWidth);
+
         setTimeout(function () {
             var w = (6 * tileWidth) - (s.gridsterOpts.margins[1] || 0);
+            var h = (3 * tileWidth) - (s.gridsterOpts.margins[1] || 0)
             $('#grid').width(w);
             $('.db-header').width(w);
             $('.grid-toolbox').width(w);
+
+            $('.grid-container').width(w);
+            $('.grid-container').height(h);
+
         });
     }
 

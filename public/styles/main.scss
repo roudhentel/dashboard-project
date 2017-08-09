@@ -59,6 +59,10 @@ html {
                     background: #1A262F;
                     justify-content: space-between;
 
+                    @include respond-to(xs) {
+                        padding: 0 30px;
+                    }
+
                     img {
                         width: 100px;
                         height: auto;
@@ -69,6 +73,14 @@ html {
                         justify-content: space-between;
                         align-items: center;
                         width: 20%;
+
+                        @include respond-to(xs) {
+                            width: 50%;
+                        }
+
+                        @include respond-to(sm) {
+                            width: 25%;
+                        }
 
                         div.menus {
                             display: flex;
@@ -109,6 +121,14 @@ html {
                                     cursor: pointer;
                                     position: relative;
                                     border-bottom: 1px solid #10181e;
+
+                                    @include respond-to(xs) {
+                                        padding: 5px;
+                                    }
+
+                                    @include respond-to(sm) {
+                                        padding: 5px;
+                                    }
 
                                     &:active, &:focus {
                                         outline: none;
@@ -193,8 +213,28 @@ html {
                     border: 1px solid;
                     transition: right .5s;
                     background: #1A262F;
-                    border: 1px solid #656565;
+                    // border: 1px solid #656565;
                     z-index: 53;
+
+                    @include respond-to(xs) {
+                        width: 210px;
+                        right: -210px;
+                    }
+
+                    @include respond-to(sm) {
+                        width: 30%;
+                        right: -30%;
+                    }
+
+                    @include respond-to(md) {
+                        width: 25%;
+                        right: -25%;
+                    }
+
+                    @include respond-to(lg) {
+                        width: 20%;
+                        right: -20%;
+                    }
 
                     div.command {
                         position: absolute;
@@ -221,6 +261,7 @@ html {
                         display: flex;
                         flex-direction: row;
                         height: 60px;
+                        min-height: 60px;
                         width: 100%;
                         align-items: center;
                         margin-top: 35px;
@@ -275,54 +316,59 @@ html {
                         }
                     }
 
-                    div.group-item {
+                    .groups {
                         display: flex;
                         flex-direction: column;
-                        width: 100%;
+                        height: auto;
+                        overflow: auto;
 
-                        span.group-header {
-                            height: 40px;
-                            display: flex;
-                            align-items: center;
-                            background: #10181e;
-                            padding: 0 5px;
-                            color: #707f84;
-                            font-size: 12px;
-                            cursor: pointer;
-                        }
+                        div.group-item {
+                            width: 100%;
 
-                        ul.group-items {
-                            list-style: none;
-                            padding: 0;
-                            transition: height .5s;
-                            overflow: hidden;
-                            margin: 0;
-
-                            li.menu-item {
+                            span.group-header {
                                 height: 40px;
                                 display: flex;
                                 align-items: center;
-                                padding: 0 5px 0 15px;
+                                background: #10181e;
+                                padding: 0 5px;
+                                color: #707f84;
+                                font-size: 12px;
                                 cursor: pointer;
-
-                                i.fa {
-                                    color: #707f84;
-                                    margin-right: 5px;
-                                    width: 15px;
-                                }
-
-                                span {
-                                    color: #707f84;
-                                    font-size: 14px;
-                                }
-
-                                &:hover {
-                                    background: #151f27;
-                                }
                             }
 
-                            &.hide-list {
-                                height: 0 !important;
+                            ul.group-items {
+                                list-style: none;
+                                padding: 0;
+                                transition: height .5s;
+                                overflow: hidden;
+                                margin: 0;
+
+                                li.menu-item {
+                                    height: 40px;
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 0 5px 0 15px;
+                                    cursor: pointer;
+
+                                    i.fa {
+                                        color: #707f84;
+                                        margin-right: 5px;
+                                        width: 15px;
+                                    }
+
+                                    span {
+                                        color: #707f84;
+                                        font-size: 14px;
+                                    }
+
+                                    &:hover {
+                                        background: #151f27;
+                                    }
+                                }
+
+                                &.hide-list {
+                                    height: 0 !important;
+                                }
                             }
                         }
                     }
