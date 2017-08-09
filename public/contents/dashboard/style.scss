@@ -122,7 +122,7 @@
                         position: initial;
                         height: 150px !important;
                         width: 90% !important;
-                        margin: 10px auto !important;
+                        margin: 5px auto !important;
                     }
                 }
             }
@@ -141,7 +141,7 @@
                         position: initial;
                         height: 150px !important;
                         width: 90% !important;
-                        margin: 10px auto !important;
+                        margin: 5px auto !important;
                     }
                 }
             }            
@@ -560,9 +560,9 @@
                     width: 100%;
                     border-collapse: collapse;
 
-                    @include respond-to(xs) {
-                        width: auto;
-                    }
+                    // @include respond-to(xs) {
+                    //     width: auto;
+                    // }
 
                     thead {
                         tr {
