@@ -14,17 +14,31 @@
         }
     },
     "test": {
-        "username": "root",
-        "password": null,
-        "database": "database_test",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
+        "username": "dashboard_admin",
+        "password": "Dashbo@rdAdm!n123!",
+        "database": "dashboard",
+        "host": "entwinedsupport.cloudapp.net",
+        "dialect": "mysql",
+        "dialectOptions": {
+            "useUTC": false
+        },
+        "timezone": "Australia/Brisbane",
+        "options": {
+            "timezone": "+10:00"
+        }
     },
     "production": {
-        "username": "root",
-        "password": null,
-        "database": "database_production",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
+        "username": "dashboard_admin",
+        "password": "Dashbo@rdAdm!n123!",
+        "database": "dashboard",
+        "host": "entwinedsupport.cloudapp.net",
+        "dialect": "mysql",
+        "dialectOptions": {
+            "useUTC": false
+        },
+        "timezone": "Australia/Brisbane",
+        "options": {
+            "timezone": "+10:00"
+        }
     }
 }
