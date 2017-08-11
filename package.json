@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node server"
-  },  
-"license": "Apache",
-"dependencies": {
+  },
+  "license": "Apache",
+  "dependencies": {
     "azure-graph": "^2.1.0-preview",
     "body-parser": "^1.17.2",
     "connect-busboy": "0.0.2",
@@ -18,8 +18,10 @@
     "morgan": "^1.8.2",
     "ms-rest-azure": "^2.2.3",
     "mysql": "^2.14.0",
+    "mysql2": "^1.4.0",
     "nodemon": "^1.11.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sequelize": "^4.4.2",
+    "sequelize-cli": "^2.8.0"
   }
 }
-

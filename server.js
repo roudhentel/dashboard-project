@@ -46,6 +46,9 @@ app.use('/api/user', userRoute);
 let widgetRoute = require('./server/routes/widget');
 app.use('/api/widget', widgetRoute);
 
+let reportRoute = require('./server/routes/report');
+app.use('/api/report', reportRoute);
+
 // public folder
 app.use(express.static(path.join(__dirname, 'public')));
 

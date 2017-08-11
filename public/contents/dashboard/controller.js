@@ -19,14 +19,30 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     s.colors = ['#D37637', '#CE4C3A', '#D62885', '#54D166', '#5968D3'];
     s.devices = ['Network', 'DMP', 'Apps', 'Panel', 'Local PC'];
     s.visibledevices = [];
+    s.dialogData = [];
     s.toggleDialog = function (_bool, item) {
         s.dashboard.smVisible = _bool;
         if (item) {
             setSelectedItem(item);
+            s.dialogData = [];
             if (item.name.toLowerCase().indexOf("sites requiring") > -1) {
                 s.visibledevices = s.devices;
             } else {
                 s.visibledevices = [item.name];
+                switch (item.name.toLowerCase()) {
+                    case "appspace":
+                        $http({
+                            method: "GET",
+                            url: "/api/report/appspace",
+                        }).then(function (res) {
+                            if (res.data) {
+                                s.dialogData = res.data.rows;
+                            }
+                        }, function (err) {
+
+                        });
+                        break;
+                }
             }
         }
     };
