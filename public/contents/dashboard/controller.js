@@ -31,6 +31,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                 s.visibledevices = [item.name];
                 switch (item.name.toLowerCase()) {
                     case "appspace":
+                        s.dialogDataLoading = true;
                         $http({
                             method: "GET",
                             url: "/api/report/appspace",
@@ -38,21 +39,25 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                             if (res.data) {
                                 s.dialogData = res.data.rows;
                             }
+                            s.dialogDataLoading = false;
                         }, function (err) {
                             console.log(err);
+                            s.dialogDataLoading = false;
                         });
                         break;
                     case "network":
+                        s.dialogDataLoading = true;
                         $http({
                             method: "GET",
                             url: "/api/report/ncm",
                         }).then(function (res) {
                             if (res.data) {
                                 s.dialogData = res.data.rows;
-                                console.log(s.dialogData);
                             }
+                            s.dialogDataLoading = false;
                         }, function (err) {
                             console.log(err);
+                            s.dialogDataLoading = false;
                         });
                         break;
                 }
@@ -96,8 +101,6 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
             colWidth: tileWidth,
             rowHeight: 'match'
         };
-
-        console.log(tileWidth);
 
         setTimeout(function () {
             var w = (6 * tileWidth) - (s.gridsterOpts.margins[1] || 0);
@@ -296,7 +299,6 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         }).then(function (res) {
             if (res.data.success) {
                 s.gbl.userGroups = res.data.groups;
-                console.log(s.gbl.userGroups);
                 setTimeout(function () {
                     fixWidthOfUserViews();
                 }, 100);

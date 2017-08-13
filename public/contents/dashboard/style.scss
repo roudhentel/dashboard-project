@@ -465,11 +465,13 @@
                     align-items: center;
 
                     @include respond-to(xs) {
-                        width: 50px;
+                        min-width: 50px;
+                        justify-content: flex-start;
                     }
 
                     @include respond-to(sm) {
-                        width: 50px;
+                        min-width: 50px;
+                        justify-content: flex-start;
                     }
 
                     @include respond-to(lg) {
@@ -682,6 +684,10 @@
                                 span {
                                     margin-left: 18px;
                                 }
+
+                                .spinner {
+                                    width: auto;
+                                }
                             }
                         }
                     }
@@ -840,9 +846,29 @@
                 margin-left: 190px;
                 padding-top: 10px;
 
+                @include respond-to(xs) {
+                    margin-left: 110px;
+                    padding-top: 10px;
+                }
+
+                @include respond-to(sm) {
+                    margin-left: 110px;
+                    padding-top: 10px;
+                }
+
                 h4 {
                     border: 0;
                     font-size: 150%;
+
+                    @include respond-to(xs) {
+                        font-size: 110%;
+                        height: 35px;
+                    }
+
+                    @include respond-to(sm) {
+                        margin-left: 110px;
+                        padding-top: 10px;
+                    }
                 }
             }
         }
@@ -922,5 +948,57 @@
 
     .cdefault {
         color: #1EC0DC;
+    }
+
+    .spinner {
+        width: 50px;
+        height: 40px;
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .spinner > div {
+        background-color: #fff;
+        height: 100%;
+        width: 6px;
+        display: inline-block;
+    
+        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    }
+
+    .spinner .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+    }
+
+    .spinner .rect3 {
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+    }
+
+    .spinner .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+
+    .spinner .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+    }
+
+    @-webkit-keyframes sk-stretchdelay {
+        0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+        20% { -webkit-transform: scaleY(1.0) }
+    }
+
+    @keyframes sk-stretchdelay {
+        0%, 40%, 100% { 
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+        }  20% { 
+            transform: scaleY(1.0);
+            -webkit-transform: scaleY(1.0);
+        }
     }
 }

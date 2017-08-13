@@ -58,7 +58,6 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
 
                 });
 
-                console.log(s.gbl.widgets);
                 s.updateWidgetsData();
                 google.charts.setOnLoadCallback(s.drawLineChart);
 
@@ -72,6 +71,7 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
         if (s.gbl.widgets.length > 0) {
             s.gbl.widgets.forEach(wgts => {
                 if (wgts.name.toLowerCase() === 'appspace') {
+                    wgts.showLoading = true;
                     $http({
                         method: "GET",
                         url: "/api/report/appspace-count",
@@ -80,10 +80,13 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
                         if (res) {
                             wgts.value = res.data.count;
                         }
+                        wgts.showLoading = false;
                     }, function (err) {
                         console.log(err);
+                        wgts.showLoading = false;
                     });
                 } else if (wgts.name.toLowerCase() === 'network') {
+                    wgts.showLoading = true;
                     $http({
                         method: "GET",
                         url: "/api/report/ncm-count",
@@ -92,8 +95,10 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
                         if (res) {
                             wgts.value = res.data.count;
                         }
+                        wgts.showLoading = false;
                     }, function (err) {
                         console.log(err);
+                        wgts.showLoading = false;
                     });
                 }
             });

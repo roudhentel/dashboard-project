@@ -29,7 +29,18 @@
                             <div class="front">
                                 <!-- front content -->
                                 <div class="part" ng-class="item.widgetid === gbl.widgetchartid ? 'chart' : ''">{{item.description || item.name}}</div>
-                                <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">{{item.value}}</div>
+                                <div class="part" ng-style="{'color': item.color}" ng-if="item.widgetid !== gbl.widgetchartid">
+                                    <div class="spinner" ng-if="item.showLoading">
+                                        <div class="rect1"></div>
+                                        <div class="rect2"></div>
+                                        <div class="rect3"></div>
+                                        <div class="rect4"></div>
+                                        <div class="rect5"></div>
+                                    </div>
+                                    <span ng-if="!item.showLoading">
+                                        {{item.value}}
+                                    </span>
+                                </div>
                                 <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
                                     <div class="label">{{item.subtitle}}</div>
                                     <div class="arrow"><i class="fa fa-angle-right" ng-click="toggleDialog(true, item);"></i></div>
@@ -110,14 +121,27 @@
                             <th ng-style="{'color': getDeviceColor(d)}" ng-repeat="d in visibledevices">{{d}}</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody ng-if="dialogDataLoading">
+                        <tr>
+                            <td colspan="4">
+                                <div class="spinner">
+                                    <div class="rect1"></div>
+                                    <div class="rect2"></div>
+                                    <div class="rect3"></div>
+                                    <div class="rect4"></div>
+                                    <div class="rect5"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                     <tbody ng-if="!dialogDataLoading">
                         <tr ng-repeat="data in dialogData">
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
                             <td ng-repeat="d in visibledevices" class="redstatus"><label></label><span ng-click="toggleDialog_1(true, data, getDeviceColor(d));"></span></td>
                         </tr>
-                    </tbody>
+                    </tbody> 
                 </table>
             </div>
 
