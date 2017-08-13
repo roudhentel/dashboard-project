@@ -13,6 +13,17 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
         listToolbox: []
     };
 
+    s.toProperCase = function (str) {
+        if (!str) return;
+        var ret = str.toString().toLowerCase();
+        var _arr = ret.split(" ");
+        var newstr = "";
+        _arr.forEach(item => {
+            newstr += item.substr(0, 1).toUpperCase() + item.substr(1, item.length) + " ";
+        })
+        return newstr.trim();
+    }
+
     s.getuserwidgets = function (objid) {
         $http({
             method: "GET",

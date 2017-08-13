@@ -39,7 +39,20 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                                 s.dialogData = res.data.rows;
                             }
                         }, function (err) {
-
+                            console.log(err);
+                        });
+                        break;
+                    case "network":
+                        $http({
+                            method: "GET",
+                            url: "/api/report/ncm",
+                        }).then(function (res) {
+                            if (res.data) {
+                                s.dialogData = res.data.rows;
+                                console.log(s.dialogData);
+                            }
+                        }, function (err) {
+                            console.log(err);
                         });
                         break;
                 }
@@ -57,7 +70,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
 
     s.toggleDialog_1 = function (_bool, item, color) {
         s.dashboard.sdVisible = _bool;
-        s.dashboard.selectedDevice = { name: item, color: color };
+        s.dashboard.selectedDevice = { item: item, color: color };
     }
 
     let setGridOptions = function () {

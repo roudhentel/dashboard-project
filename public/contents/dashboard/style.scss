@@ -459,7 +459,7 @@
                     display: flex;
                     width: 30%;
                     height: 100%;
-                    max-width: 100px;
+                    max-width: 125px;
                     font-size: 550%;
                     justify-content: center;
                     align-items: center;
@@ -832,6 +832,17 @@
                         padding-left: 10px;
                         justify-content: flex-end;
                     }
+                }
+            }
+
+            .tab-view {
+                width: 100%;
+                margin-left: 190px;
+                padding-top: 10px;
+
+                h4 {
+                    border: 0;
+                    font-size: 150%;
                 }
             }
         }

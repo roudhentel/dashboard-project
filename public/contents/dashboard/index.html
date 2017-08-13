@@ -112,10 +112,10 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="data in dialogData">
-                            <td>sitename</td>
-                            <td>address</td>
-                            <td>123456567</td>
-                            <td ng-repeat="d in visibledevices" class="greenstatus"><label></label><span ng-click="toggleDialog_1(true, d, getDeviceColor(d));"></span></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td ng-repeat="d in visibledevices" class="redstatus"><label></label><span ng-click="toggleDialog_1(true, data, getDeviceColor(d));"></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -141,11 +141,12 @@
                     <li>Item</li>
                     <li>Status</li>
                     <li>Details</li>
-                    <li>All</li>
                 </ul>
             </div>
             <div class="tab-view">
-
+                <h4>{{dashboard.selectedDevice.item.Player.description || dashboard.selectedDevice.item.Modem.serial_number}}</h4>
+                <h4>{{toProperCase(dashboard.selectedDevice.item.status)}}</h4>
+                <h4>Last online :&nbsp;{{dashboard.selectedDevice.item.last_online | date:'MMMM dd, yyyy hh:mm:ss a'}}</h4>
             </div>
         </div>
         <footer></footer>
