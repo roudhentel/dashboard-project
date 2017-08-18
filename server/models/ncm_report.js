@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         modem_id: DataTypes.INTEGER,
         time: DataTypes.DATE,
         status: DataTypes.STRING,
-        last_online: DataTypes.DATE,
+        last_status_change: DataTypes.DATE,
         signal_strength: DataTypes.STRING
     }, {
             timestamps: false,

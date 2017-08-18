@@ -84,12 +84,12 @@
     .grid-container {
         display: block;
         overflow: hidden;
-        top: 0;
-        bottom: 0;
+        // top: 0;
+        // bottom: 0;
         left: 0;
         right: 0;
-        position: absolute;
-        margin: auto;
+        position: initial;
+        margin: 0 auto;
 
         @include respond-to(xs) {
             display: flex;
@@ -328,6 +328,29 @@
         }
     }
 
+    .db-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        @include respond-to(xs) {
+            flex-direction: column;
+            height: 40%;
+            max-height: 100px;
+            justify-content: center;
+            width: auto !important;
+        }
+
+        @include respond-to(sm) {
+            flex-direction: column;
+            height: 40%;
+            max-height: 100px;
+            justify-content: center;
+            width: auto !important;
+        }
+    }
+
     .backmodal, .backmodal_1 {
         position: fixed;
         width: 100%;
@@ -419,12 +442,14 @@
                     width: 100%;
                     font-size: 19px;
                     margin-top: 5px;
+                    justify-content: center;
                 }
 
                 @include respond-to(sm) {
                     width: 100%;
                     font-size: 19px;
                     margin-top: 5px;
+                    justify-content: center;
                 }
 
                 @include respond-to(lg) {
@@ -526,6 +551,40 @@
             width: 100%;
             height: 80%;
 
+            .search-group {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                height: 55px;
+                padding-left: 20px;
+
+                input {
+                    border: none;
+                    height: 35px;
+                    margin-right: 3px;
+                    padding: 0 5px;
+
+                    @include respond-to(xs) {
+                        width: 40%;
+                    }
+
+                    @include respond-to(sm) {
+                        width: 40%;
+                    }
+                }
+
+                button {
+                    border-radius: 0;
+                    height: 35px;
+                    margin: 0;
+                    line-height: 0;
+
+                    &:not(:last-child) {
+                        margin-right: 3px;
+                    }
+                }
+            }
+
             h4 {
                 display: flex;
                 align-items: center;
@@ -539,11 +598,13 @@
                 @include respond-to(xs) {
                     font-size: 21px;
                     padding: 5px 20px;
+                    height: 5%;
                 }
 
                 @include respond-to(sm) {
                     font-size: 21px;
                     padding: 5px 20px;
+                    height: 5%;
                 }
             }
             
@@ -561,10 +622,6 @@
                 table {
                     width: 100%;
                     border-collapse: collapse;
-
-                    // @include respond-to(xs) {
-                    //     width: auto;
-                    // }
 
                     thead {
                         tr {
@@ -613,6 +670,11 @@
                     tbody {
                         tr {
                             border-bottom: 1px solid #4a5a6b;
+
+                            &:active, &:focus, &:hover {
+                                background-color: #435363;
+                            }
+
                             td {
                                 padding: 7px 0;
                                 position: relative;
@@ -727,17 +789,33 @@
         }
 
         header {
+            position: relative;
+            justify-content: flex-start;
+
             .title {
-                min-width: 30%;
+                min-width: 70%;
                 width: auto;
+                padding: 5px 15px;
 
                 @include respond-to(lg) {
+                    font-size: 19px;
+                }
+
+                @include respond-to(xxlg) {
                     font-size: 24px;
+                }
+
+                @include respond-to(xlg) {
+                    font-size: 22px;
+                }
+
+                @include respond-to(md) {
+                    font-size: 20px;
                 }
             }
 
             .count-display {
-                width: 70%;
+                width: 140px;
 
                 @include respond-to(xs) {
                     width: 100%;
@@ -748,15 +826,15 @@
                 }
 
                 @include respond-to(xlg) {
-                    width: 50%;
+                    width: 120px;
                 }
 
                 @include respond-to(xxlg) {
-                    width: 50%;
+                    width: 130px;
                 }
 
                 @include respond-to(lg) {
-                    width: 50%;
+                    width: 115px;
                 }
 
                 .description {
@@ -784,9 +862,17 @@
                     }
 
                     @include respond-to(xxlg) {
-                        font-size: 300%;
+                        font-size: 270%;
                     }
                 }
+            }
+
+            .close {
+                position: absolute;
+                right: 15px;
+                top: 0;
+                bottom: 0;
+                margin: auto 0;
             }
         }
 
@@ -854,6 +940,14 @@
                 @include respond-to(sm) {
                     margin-left: 110px;
                     padding-top: 10px;
+                }
+
+                @include respond-to(lg) {
+                    font-size: 12px;
+                }
+
+                @include respond-to(md) {
+                    font-size: 12px;
                 }
 
                 h4 {

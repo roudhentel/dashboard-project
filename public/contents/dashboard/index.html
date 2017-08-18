@@ -17,7 +17,10 @@
 <div class="dashboard-page">
     <div class="db-header">
         <h4 ng-if="!isEdit">{{dashboard.header}}</h4>
-        <input type="text" ng-if="isEdit" ng-model="dashboard.header">
+        <!-- <form class="search-group">
+            <input type="search" />
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Search</button>
+        </form> -->
     </div>
 
     <div class="grid-container">
@@ -41,13 +44,13 @@
                                         {{item.value}}
                                     </span>
                                 </div>
-                                <div class="part" ng-if="item.subtitle && item.widgetid !== 4">
+                                <div class="part" ng-if="item.subtitle && item.widgetid !== 4" ng-click="toggleDialog(true, item);">
                                     <div class="label">{{item.subtitle}}</div>
-                                    <div class="arrow"><i class="fa fa-angle-right" ng-click="toggleDialog(true, item);"></i></div>
+                                    <div class="arrow"><i class="fa fa-angle-right"></i></div>
                                 </div>
-                                <div class="part" ng-if="!item.subtitle && item.widgetid !== 4">
+                                <div class="part" ng-if="!item.subtitle && item.widgetid !== 4" ng-click="toggleDialog(true, item);">
                                     <div class="label"></div>
-                                    <div class="arrow"><i class="fa fa-ellipsis-h" ng-click="toggleDialog(true, item);"></i></div>
+                                    <div class="arrow"><i class="fa fa-ellipsis-h"></i></div>
                                 </div>
                                 <div id="lineChart" ng-if="item.widgetid === gbl.widgetchartid">
 
@@ -110,6 +113,11 @@
             <div class="close"><i class="fa fa-remove" ng-click="toggleDialog(false);"></i></div>
         </header>
         <div class="dialog-body">
+            <form class="search-group" ng-if="dashboard.selectedItem.name.toLowerCase().indexOf('search') > -1">
+                <input type="search" ng-model="txtSearch" />
+                <button type="submit" class="btn btn-primary" ng-click="search(txtSearch);"><i class="fa fa-search"></i>&nbsp;Search</button>
+                <button type="submit" class="btn btn-warning">Clear</button>
+            </form>
             <h4>Site List</h4>
             <div class="display">
                 <table>
@@ -123,7 +131,7 @@
                     </thead>
                     <tbody ng-if="dialogDataLoading">
                         <tr>
-                            <td colspan="4">
+                            <td colspan="8">
                                 <div class="spinner">
                                     <div class="rect1"></div>
                                     <div class="rect2"></div>
@@ -134,14 +142,14 @@
                             </td>
                         </tr>
                     </tbody>
-                     <tbody ng-if="!dialogDataLoading">
+                    <tbody ng-if="!dialogDataLoading">
                         <tr ng-repeat="data in dialogData">
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td ng-repeat="d in visibledevices" class="redstatus"><label></label><span ng-click="toggleDialog_1(true, data, getDeviceColor(d));"></span></td>
+                            <td>{{data.Modem.Site.name || data.Player.Site.name || '-'}}</td>
+                            <td>{{data.Modem.Site.address || data.Player.Site.address || '-'}}</td>
+                            <td>{{data.Modem.Site.postcode || data.Player.Site.postcode || '-'}}</td>
+                            <td ng-repeat="d in visibledevices" ng-class="getDeviceStatus(d, data);"><label></label><span ng-click="toggleDialog_1(true, data, d);"></span></td>
                         </tr>
-                    </tbody> 
+                    </tbody>
                 </table>
             </div>
 
@@ -153,10 +161,10 @@
 
     <div class="dialog_1" ng-class="dashboard.sdVisible ? 'hover' : ''" ng-show="dashboard.sdVisible">
         <header>
-            <div class="title">Site Name<span>&nbsp;Details</span></div>
             <div class="count-display">
                 <div class="description" ng-style="{'color': dashboard.selectedDevice.color}">{{dashboard.selectedDevice.name}}&nbsp;Status</div>
             </div>
+            <div class="title">{{dashboard.selectedDevice.item.Modem.Site.name || data.Player.Site.name || 'Site Name'}}&nbsp;Details</div>
             <div class="close"><i class="fa fa-remove" ng-click="toggleDialog_1(false);"></i></div>
         </header>
         <div class="dialog-body">
@@ -167,10 +175,12 @@
                     <li>Details</li>
                 </ul>
             </div>
-            <div class="tab-view">
+            <div class="tab-view" ng-if="dashboard.selectedDevice.device === 'Network'">
                 <h4>{{dashboard.selectedDevice.item.Player.description || dashboard.selectedDevice.item.Modem.serial_number}}</h4>
                 <h4>{{toProperCase(dashboard.selectedDevice.item.status)}}</h4>
-                <h4>Last online :&nbsp;{{dashboard.selectedDevice.item.last_online | date:'MMMM dd, yyyy hh:mm:ss a'}}</h4>
+                <h4>Last status change :&nbsp;{{dashboard.selectedDevice.item.last_status_change | date:'MMMM dd, yyyy hh:mm:ss
+                    a'}}
+                </h4>
             </div>
         </div>
         <footer></footer>

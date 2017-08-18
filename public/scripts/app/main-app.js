@@ -11,7 +11,7 @@ mainApp.config(($locationProvider, adalAuthenticationServiceProvider, $httpProvi
     // initialize ADAL with your application's information
     adalAuthenticationServiceProvider.init({
         instance: 'https://login.microsoftonline.com/',
-        tenant: 'common',
+        tenant: 'a53a1d69-f63a-4ee0-9ef5-fc468542cc19',
         clientId: '238ebf3d-2ed8-4e49-ac37-0ac95b6a28a5',
         // clientId: 'ce203717-c038-45c0-ad87-3c7bd40869d3',
     }, $httpProvider);

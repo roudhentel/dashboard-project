@@ -12,41 +12,59 @@ function ReportRoutes() {
         foreignKey: 'player_id'
     });
 
-    db.Player.belongsTo(db.Modem, {
-        foreignKey: 'modem_id'
-    })
+    db.Player.belongsTo(db.Site, {
+        foreignKey: 'site_id'
+    });
+
+    db.Modem.belongsTo(db.Site, {
+        foreignKey: 'site_id'
+    });
 
     router.get('/ncm-count', function (req, res) {
-        db.NcmReport.findAll({
-            attributes: [
-                [db.sequelize.literal("COUNT(DISTINCT(modem_id))"), "count"]
-            ],
+        db.NcmReport.count({
+            // attributes: [
+            //     [db.sequelize.literal("COUNT(DISTINCT(modem_id))"), "count"]
+            // ],
+            include: [{
+                all: true,
+                nested: true
+            }],
             where: {
-                time: {
-                    $lt: db.sequelize.fn('NOW'),
-                    $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
-                }
-            },
-            order: [["modem_id", "ASC"]]
+                // time: {
+                //     $lt: db.sequelize.fn('NOW'),
+                //     $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
+                // },
+                time: { $in: db.sequelize.literal("(SELECT MAX(ncm_reports.time) FROM ncm_reports)") },
+                $not: [
+                    { status: 'online' }
+                ],
+                $and: [
+                    { $not: [{ '$Modem.site_id$': null }] }
+                ]
+            }
         })
-            .then(users => res.status(200).json(users[0]))
+            .then(count => res.status(200).json({ count: count }))
             .catch(error => res.status(400).json(error));
     });
 
     router.get('/ncm', function (req, res) {
         db.NcmReport.findAndCountAll({
             include: [{
-                // model: Modem,
-                // where: {},
-                // paranoid: false
                 all: true,
                 nested: true
             }],
             where: {
-                time: {
-                    $lt: db.sequelize.fn('NOW'),
-                    $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
-                }
+                // time: {
+                //     $lt: db.sequelize.fn('NOW'),
+                //     $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
+                // },
+                time: { $in: db.sequelize.literal("(SELECT MAX(ncm_reports.time) FROM ncm_reports)") },
+                $not: [
+                    { status: 'online' }
+                ],
+                $and: [
+                    { $not: [{ '$Modem.site_id$': null }] }
+                ]
             },
             order: [["modem_id", "ASC"]]
         })
@@ -56,15 +74,25 @@ function ReportRoutes() {
 
     router.get('/appspace-count', function (req, res) {
         db.AppspaceReport.count({
+            include: [{
+                all: true,
+                nested: true
+            }],
             where: {
-                time: {
-                    $lt: db.sequelize.fn('NOW'),
-                    $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
-                }
-            },
-            order: [["player_id", "ASC"]]
+                // time: {
+                //     $lt: db.sequelize.fn('NOW'),
+                //     $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
+                // },
+                time: { $in: db.sequelize.literal("(SELECT MAX(appspace_reports.time) FROM appspace_reports)") },
+                $not: [
+                    { status: 'online' }
+                ],
+                $and: [
+                    { $not: [{ '$Player.site_id$': null }] }
+                ]
+            }
         })
-            .then(users => res.status(200).json({ count: users }))
+            .then(count => res.status(200).json({ count: count }))
             .catch(error => res.status(400).json(error));
     });
 
@@ -75,14 +103,60 @@ function ReportRoutes() {
                 nested: true
             }],
             where: {
-                time: {
-                    $lt: db.sequelize.fn('NOW'),
-                    $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
-                }
+                // time: {
+                //     $lt: db.sequelize.fn('NOW'),
+                //     $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
+                // },
+                time: { $in: db.sequelize.literal("(SELECT MAX(appspace_reports.time) FROM appspace_reports)") },
+                $not: [
+                    { status: 'online' }
+                ],
+                $and: [
+                    { $not: [{ '$Player.site_id$': null }] }
+                ]
             },
             order: [["player_id", "ASC"]]
         })
             .then(reports => res.status(200).json(reports))
+            .catch(error => res.status(400).json(error));
+    });
+
+    router.get('/search', function (req, res) {
+        let queryStr = req.query.queryStr;
+        queryStr = queryStr ? queryStr.toString().toLowerCase() : "";
+        db.NcmReport.findAll({
+            include: [{
+                all: true,
+                nested: true
+            }],
+            where: {
+                // time: {
+                //     $lt: db.sequelize.fn('NOW'),
+                //     $gt: db.sequelize.literal("NOW() - INTERVAL '15:0' MINUTE_SECOND")
+                // },
+                time: { $in: db.sequelize.literal("(SELECT MAX(ncm_reports.time) FROM ncm_reports)") },
+                $not: [
+                    { status: 'online' }
+                ],
+                $and: [
+                    { $not: [{ '$Modem.site_id$': null }] }
+                ]
+            },
+            order: [["modem_id", "ASC"]]
+        })
+            .then(result => {
+                var filteredResult = result.filter(obj => {
+                    if ((obj.Modem && obj.Modem.serial_number.toLowerCase().indexOf(queryStr) > -1) ||
+                        (obj.Modem && obj.Modem.Site && 
+                            (obj.Modem.Site.name.toLowerCase().indexOf(queryStr) > -1 ||
+                            (obj.Modem.Site.address || "").toLowerCase().indexOf(queryStr) > -1 ||
+                            (obj.Modem.Site.postcode || "").toLowerCase().indexOf(queryStr) > -1))
+                    ) {
+                        return obj;
+                    }
+                });
+                res.status(200).json({ rows: filteredResult });
+            })
             .catch(error => res.status(400).json(error));
     });
 

@@ -22,11 +22,35 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
     s.dialogData = [];
     s.toggleDialog = function (_bool, item) {
         s.dashboard.smVisible = _bool;
+        if (!_bool && s.dashboard.selectedItem && s.dashboard.selectedItem.name.toLowerCase() === "search") {
+            s.dashboard.selectedItem.value = 0;
+        }
         if (item) {
             setSelectedItem(item);
             s.dialogData = [];
-            if (item.name.toLowerCase().indexOf("sites requiring") > -1) {
+            if (item.name.toLowerCase().indexOf("sites requiring") > -1 ||
+                item.name.toLowerCase().indexOf("search") > -1) {
                 s.visibledevices = s.devices;
+                switch (item.name.toLowerCase()) {
+                    case "sites requiring attention":
+                        s.dialogDataLoading = true;
+                        $http({
+                            method: "GET",
+                            url: "/api/report/ncm",
+                        }).then(function (res) {
+                            if (res.data) {
+                                s.dialogData = res.data.rows;
+                            }
+                            s.dialogDataLoading = false;
+                        }, function (err) {
+                            console.log(err);
+                            s.dialogDataLoading = false;
+                        });
+                        break;
+                    case "search":
+
+                        break;
+                }
             } else {
                 s.visibledevices = [item.name];
                 switch (item.name.toLowerCase()) {
@@ -53,6 +77,7 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                         }).then(function (res) {
                             if (res.data) {
                                 s.dialogData = res.data.rows;
+                                console.log(res.data);
                             }
                             s.dialogDataLoading = false;
                         }, function (err) {
@@ -60,12 +85,24 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
                             s.dialogDataLoading = false;
                         });
                         break;
+                    case "sites requiring attention":
+
+                        break;
                 }
             }
         }
     };
 
+    s.getDeviceStatus = function (col, item) {
+        if (col && col.toLowerCase() === 'network') {
+            return item.Modem ? "redstatus" : "greenstatus";
+        } else {
+            return "nastatus";
+        }
+    }
+
     s.getDeviceColor = function (device) {
+        if (!device) return;
         var d = s.devices.find(obj => obj.toLowerCase() === device.toLowerCase().substr(0, obj.length));
         if (d) {
             var idx = s.devices.indexOf(d);
@@ -73,9 +110,37 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         }
     }
 
-    s.toggleDialog_1 = function (_bool, item, color) {
+    s.toggleDialog_1 = function (_bool, item, device) {
+        let showdialog = false;
+        let color = s.getDeviceColor(device);
+
+        if (device === "Network" && item.Modem) showdialog = true;
+
+        if (!showdialog && _bool) return;
+        s.dashboard.selectedDevice = { item: item, color: color, device: device };
         s.dashboard.sdVisible = _bool;
-        s.dashboard.selectedDevice = { item: item, color: color };
+    }
+
+    s.txtSearch = "";
+    s.search = function (queryStr) {
+        if (queryStr === undefined) return;
+        s.dialogDataLoading = true;
+        $http({
+            method: "GET",
+            url: "/api/report/search",
+            params: {
+                queryStr: queryStr
+            }
+        }).then(function (res) {
+            if (res.data.rows) {
+                s.dialogData = res.data.rows;
+                s.dashboard.selectedItem.value = res.data.rows.length;
+            }
+            s.dialogDataLoading = false;
+        }, function (err) {
+            console.log(err);
+            s.dialogDataLoading = false;
+        })
     }
 
     let setGridOptions = function () {
@@ -299,6 +364,9 @@ mainApp.controller("dashboardCtrl", function ($scope, $http, Dialog, adalAuthent
         }).then(function (res) {
             if (res.data.success) {
                 s.gbl.userGroups = res.data.groups;
+                // if (s.gbl.userGroups.length <= 0) {
+                //     s.logout();
+                // }
                 setTimeout(function () {
                     fixWidthOfUserViews();
                 }, 100);

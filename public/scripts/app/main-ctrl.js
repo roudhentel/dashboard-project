@@ -100,10 +100,29 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
                         console.log(err);
                         wgts.showLoading = false;
                     });
+                } else if (wgts.name.toLowerCase() === 'sites requiring attention') {
+                    wgts.showLoading = true;
+                    $http({
+                        method: "GET",
+                        url: "/api/report/ncm-count",
+                        params: {}
+                    }).then(function (res) {
+                        if (res) {
+                            wgts.value = res.data.count;
+                        }
+                        wgts.showLoading = false;
+                    }, function (err) {
+                        console.log(err);
+                        wgts.showLoading = false;
+                    });
                 }
             });
         };
     };
+
+    setInterval(() => {
+        s.updateWidgetsData();
+    }, 60000);
 
     s.setSelectedView = function (view, objid) {
         s.gbl.selectedView = view;
@@ -145,4 +164,6 @@ mainApp.controller("mainCtrl", function ($scope, $http, adalAuthenticationServic
             $(ev.currentTarget).removeClass('open');
         }
     }
+
+   // console.log(s.userInfo);
 });

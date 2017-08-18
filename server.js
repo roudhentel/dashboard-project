@@ -17,7 +17,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb', parameterLimit: 50000 }));
 
 // log request
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 
 // Add headers
 app.use(function (req, res, next) {

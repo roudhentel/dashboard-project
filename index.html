@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<meta name="description" content="">
-<meta name="author" content="">
-<meta name="format-detection" content="telephone=no">
-
-<link rel="stylesheet" href="styles/font-awesome/css/font-awesome.min.css" />
-<link rel="stylesheet" href="styles/bootstrap/css/bootstrap.min.css" />
-<link rel="stylesheet" href="styles/angular-material.min.css" />
-<link rel="stylesheet" href="styles/angular-gridster.min.css" />
-<link rel="stylesheet" href="styles/main.css" />
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="styles/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="styles/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/angular-material.min.css" />
+    <link rel="stylesheet" href="styles/angular-gridster.min.css" />
+    <link rel="stylesheet" href="styles/main.css" />
     <title>Dashboard</title>
 </head>
 
@@ -24,7 +24,7 @@
                 <img src="assets/img/entwinedSolutions.png" alt="logo">
                 <div class="rside">
                     <div class="menus">
-                        <span>{{userInfo.profile.name}} <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
+                        <span>{{userInfo.profile.name || userInfo.profile.email}} <i class="fa" ng-class="!toggleNameMenu ? 'fa-sort-down' : 'fa-sort-up'" ng-click="toggleNameMenu = !toggleNameMenu;"></i></span>
                         <div class="name-menu" ng-show="toggleNameMenu">
                             <div id="user-views" class="menu-item sub-menu" ng-click="showSubMenu($event);">
                                 <i class="fa toggle"></i>
@@ -42,7 +42,8 @@
                         </div>
                     </div>
                     <div class="bars">
-                        <i class="fa fa-bars" ng-click="rsBarVisible = true;"></i>
+                        <i class="fa fa-bars" ></i>
+                        <!-- ng-click="rsBarVisible = true;" -->
                     </div>
                 </div>
             </div>
@@ -60,7 +61,7 @@
                         <img src="assets/img/avatar.png">
                     </div>
                     <div class="details">
-                        <div class="fullname">{{userInfo.profile.name}}</div>
+                        <div class="fullname">{{userInfo.profile.name || userInfo.profile.email}}</div>
                         <div class="status"><i class="fa fa-circle online"></i> Online</div>
                     </div>
                 </div>
